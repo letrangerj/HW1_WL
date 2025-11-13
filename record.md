@@ -15,3 +15,27 @@
 “cells with a very small
 library size (<2,500) and a very high (>0.15) mitochondrial genome transcript ratio were removed”
 
+
+## 3. Cell Clustering and Annotation
+### a. 根据figure 5e-g:
+得到marker genes如下：
+```python
+megakaryocyte_markers = ["ITGA3", "ITGA6", "GP1BA", "GP9", "F2R", "SELP"]
+erythroid_markers = ["GYPA", "KLF1", "EPB42"]
+progenitor_markers = ["ANXA1", "CD44", "LMO4"]
+```
+并且有
+```
+  # 伪代码逻辑
+if erythroid_markers == "高" and megakaryocyte_markers == "低":
+    cluster = "C1"
+    
+elif erythroid_markers == "中" and progenitor_markers == "上调":
+    cluster = "C2"
+    
+elif progenitor_markers == "高" and erythroid_markers == "降低" and megakaryocyte_markers == "开始上调":
+    cluster = "C3"
+    
+elif megakaryocyte_markers == "高" and erythroid_markers == "低":
+    cluster = "C4 or C5"  # 需要CD53进一步区分, C5的CD53高
+```
