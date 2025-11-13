@@ -1,4 +1,4 @@
-./data
-./.zed
-./.gitignore
-./cache
+data
+.zed
+.gitignore
+cache
