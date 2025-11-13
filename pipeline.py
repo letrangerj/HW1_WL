@@ -59,8 +59,8 @@ adata_new = []
 for i, ad in enumerate(adatas):
     sc.pp.filter_cells(ad, min_genes=200)
     sc.pp.filter_genes(ad, min_cells=3)
-    ad = ad[ad.obs.n_genes_by_counts < 2000, :]
-    ad = ad[ad.obs.pct_counts_mt < 5, :]
+    ad = ad[ad.obs.n_genes_by_counts > 2500, :]
+    ad = ad[ad.obs.pct_counts_mt < 15, :]
 
 fig, axes = plt.subplots(3, 4, figsize=(12, 8))
 plt.suptitle("After QC")

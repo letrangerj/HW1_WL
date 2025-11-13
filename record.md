@@ -11,3 +11,7 @@
 - `n_genes_by_counts` / `nFeature_RNA`: 每个细胞检测到的基因数量
 - `total_counts` / `nCount_RNA`: 每个细胞的总UMI/reads数
 - `pct_counts_mt` / `percent.mt`: 线粒体基因表达百分比
+在原文章中，methodology部分有：
+“cells with a very small
+library size (<2,500) and a very high (>0.15) mitochondrial genome transcript ratio were removed”
+
