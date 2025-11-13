@@ -1,4 +1,16 @@
-data
-.zed
+# 数据文件夹
+data/
+cache/
+
+# 编辑器配置
+.zed/
+
+# Git 忽略文件本身
 .gitignore
-cache
+
+# 其他可能的临时文件
+*.tmp
+*.log
+__pycache__/
+*.pyc
+*.pyo
