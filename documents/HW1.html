@@ -1,0 +1,135 @@
+<!DOCTYPE html><html><head>
+      <title>HW1</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////Users/xutian/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.19/crossnote/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h3 id="assignment-1--fall-2025">Assignment 1 / Fall 2025 </h3>
+<p>In this assignment, we will explore the fundamental workflow and key concepts in single-cell analysis, covering the following steps:</p>
+<ol>
+<li>Setting up the analysis environment</li>
+<li>Data preprocessing, beginning with the count matrix, and basic quality control</li>
+<li>Correcting for batch effects</li>
+<li>Cell clustering and annotation</li>
+<li>Gene Ontology (GO) term enrichment analysis</li>
+<li>Advanced topic (e.g. trajectory analysis)</li>
+</ol>
+<p>By completing this project, you’ll gain the skills needed to perform basic analyses on single-cell RNA sequencing data and adapt existing code to your own research. You’ll also be able to understand, replicate, and interpret figures or results from research papers, as well as create publication-quality visualizations and analyses from your own data.</p>
+<h4 id="background">Background: </h4>
+<p>The data for this project were sourced from <a href="https://pubmed.ncbi.nlm.nih.gov/35931032/">https://pubmed.ncbi.nlm.nih.gov/35931032/</a>, which studied the use of a four-small-molecule cocktail to reprogram erythroblasts (EBs) into induced transfusible megakaryocytes (iMKs). You may not fully understand the whole paper, here provides you with some basic background.</p>
+<p> <img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fnri3062/MediaObjects/41577_2011_Article_BFnri3062_Fig1_HTML.jpg?as=webp" width="300" align="right"> In the hematopoietic process, Long-term hematopoietic stem cells (HSCs) have the capacity to self-renew over the lifespan of an animal and also to give rise to all the cell types of the bone marrow and peripheral blood. Other pluripotent progenitors, short-term HSCs, and multipotent progenitors (MPPs) have less self-renewal capacity. Together, these three cell types constitute the hematopoietic stem and progenitor cell (HSPC) population. MPPs are thought to differentiate into the two main branches of hematopoietic development that arise from the common lymphoid progenitor (CLP) and the common myeloid progenitor (CMP). This process is more complex and nuanced than shown here. Mature peripheral blood cells, shown on the right, are derived from these progenitors. GMP, granulocyte and macrophage progenitor; MEP, megakaryocyte and erythrocyte progenitor; NK, natural killer.
+</p><p> <img src="https://www.cell.com/cms/10.1016/j.stem.2022.07.004/asset/8bd84c47-056b-49cf-aa20-cf39b1079a9f/main.assets/fx1_lrg.jpg" width="230" align="left">During the induced reprogramming process, the authors divided it into four distinct stages: untreated erythroblasts (EBs, d0) → iMKd3 → iMKd5 → iMKd7. They performed single-cell RNA sequencing (scRNA-seq) and single-cell ATAC sequencing (scATAC-seq) to investigate dynamic changes in gene expression throughout these stages.
+</p><p>The study found that the small molecule cocktail effectively mediates genome-wide chromatin remodeling, upregulating key transcription factors essential for megakaryocyte (MK) cell differentiation, such as <em>FLI1</em> and <em>MEIS1</em>.</p>
+<p>Only the 10x single-cell RNA sequencing (scRNA-seq) data are included in this assignment, we will replicate the major finding from scRNA-seq data as done by the authors.</p>
+<p>The dataset consists of four samples processed with CellRanger: EB, iMKd3, iMKd5, and iMKd7. You can access the data through the GEO repository (accession number GSE207654; refer to the Data Availability section in the original study) or directly via <a href="https://disk.pku.edu.cn/link/AAD454F76C2B87458BAF1A24D95220E7CE">this link</a>.</p>
+<p>Data analysis can be conducted in either R, which offers high-quality visualizations and access to R-specific packages, or Python, which is optimized for efficient computation.</p>
+<h4 id="tasks-and-scoring">Tasks and scoring: </h4>
+<ol start="0">
+<li>
+<p><strong>Environment Setup</strong> (10 points)</p>
+<p>a. Set up your environment using Conda or Miniconda (preferred for its lightweight design).</p>
+<p>b. When submitting your final report, you may omit this section. If all other tasks are completed, this setup will be graded automatically.</p>
+</li>
+<li>
+<p><strong>Preprocessing and Quality Control</strong>  (10 points)</p>
+<p>a. Remove low-expressed genes, cell quality control, filter, and expression counts normalization.</p>
+<p>b. Describe why the percentage of mitochondria gene can be a quality control criterion.</p>
+<p>c. Plot the 'nFeature_RNA', 'nCount_RNA', and 'percent.mt' figures before and after quality control, and explain their meanings.</p>
+</li>
+<li>
+<p><strong>Batch Effect Removal</strong> (30 points)</p>
+<p>a. Use any batch effect removal algorithm to address batch differences, and briefly explain your choice of algorithm.</p>
+<p>b. Plot UMAP/t-SNE visualizations before and after batch effect removal, referring to Figures 5a and 5b in the original study.</p>
+</li>
+<li>
+<p><strong>Cell Clustering and Annotation</strong>  (30 points)</p>
+<p>a. Perform cell clustering and annotation, referencing Figure 5b from the original publication for guidance. Marker genes used for annotation can be adopted from Figures 5e-g.</p>
+<p>b. Create a t-SNE/UMAP plot with cell type annotations, as shown in Figure 5b.</p>
+<p>c. Plot a heatmap and violin plot for marker gene expression within clusters, referring to Figures 5d and 5h.</p>
+<p>d. Visualize sample proportions for each cell type cluster, as shown in Figure 5c.</p>
+</li>
+<li>
+<p><strong>GO Enrichment for Cell Cluster Marker Genes</strong> (10 points)</p>
+<p>a. Select two cell clusters and perform GO enrichment analysis, referencing Figure 5j.</p>
+<p>b. Present and interpret the GO enrichment results.</p>
+</li>
+<li>
+<p><strong>Advanced Topic</strong> (10 points, finished one is enough)</p>
+<p>a. In single-cell sequencing, some droplets may contain multiple cells, known as “doublets,” which can lead to inaccurate biological interpretations. Choose a doublet removal algorithm, remove doublets from the dataset, and assess how removing doublets affects the results.</p>
+<p>b. The original study examines dynamics during reprogramming and uses a trajectory inference algorithm to infer developmental pathways. Briefly describe the reasoning behind applying trajectory inference and summarize the main dynamic processes in reprogramming, as described in the paper. You may use any algorithm (including Monocle, as used by the authors).</p>
+<p>c. Other analysis, proposed by your own.</p>
+</li>
+</ol>
+<h4 id="miscellaneous-guidelines">Miscellaneous Guidelines: </h4>
+<ol>
+<li>
+<p><strong>Coding Language</strong>: Use either R or Python exclusively. For preprocessing, you may refer to the <em>Seurat</em> (R) or <em>Scanpy</em> (Python) workflows:</p>
+<p>a. <em>Seurat</em> workflow (R) <a href="https://satijalab.org/seurat/articles/pbmc3k_tutorial">https://satijalab.org/seurat/articles/pbmc3k_tutorial</a></p>
+<p>b. <em>Scanpy</em> workflow (Python) <a href="https://scanpy-tutorials.readthedocs.io/en/latest/pbmc3k.html">https://scanpy-tutorials.readthedocs.io/en/latest/pbmc3k.html</a></p>
+<p>The basic principles of data preprocessing are largely consistent between these two packages.</p>
+</li>
+<li>
+<p><strong>Code Submission</strong>: All code should be consolidated into a single file. However, if using different languages for different tasks, two files are acceptable (e.g., clustering with <em>Scanpy</em> in Python and GO analysis with <em>clusterProfiler</em> in R).</p>
+</li>
+<li>
+<p><strong>References</strong>: You may refer to the methods section in the original papers or any public resources. Use ChatGPT only if explicitly cited at the corresponding extraction position. (Note: ChatGPT may not always provide ideal answers, especially for code generation.)</p>
+</li>
+<li>
+<p><strong>Figure Reproduction</strong>: Exact replication of all figures is not required due to possible parameter sensitivity in algorithms. Ensure, however, that major findings in your report align with those of the original study, or if not aligned, briefly discuss potential pitfalls.</p>
+</li>
+<li>
+<p><strong>Report Format</strong>: Submit the final report in PDF format, in either English or Chinese. The report should not exceed 10 A4 pages.</p>
+</li>
+<li>
+<p><strong>File Naming and Submission</strong>: Submit all files in a single zipped file, named as follows:</p>
+<p>​	•	Zipped file: "YourName-StudentID.zip"</p>
+<p>​	•	Script file(s): "YourName-StudentID.py/R/ipynb"</p>
+<p>​	•	Report file: "YourName-StudentID.pdf"</p>
+</li>
+<li>
+<p><strong>Submission</strong>: Email all files in a single email to <a href="mailto:xu_tian@stu.pku.edu.cn">xu_tian@stu.pku.edu.cn</a>. The submission deadline is December 1st 23:59 (UTC+8). Submission time will be determined by the email’s received date.</p>
+</li>
+<li>
+<p><strong>Late Submission Policy</strong>: Late submissions will incur a score penalty calculated by the formula: ⌈x/7⌉ * 20%, where <em>x</em> is the number of days after the deadline. ⌈⌉ denotes the ceiling function.</p>
+</li>
+</ol>
+<h4 id="reference">Reference: </h4>
+<p>Here are some links you may find useful to finish the project:</p>
+<ol>
+<li>Review paper: Current best practices in single‐cell RNA‐seq analysis: a tutorial <a href="https://www.embopress.org/doi/full/10.15252/msb.20188746">https://www.embopress.org/doi/full/10.15252/msb.20188746</a> follows by their online turtorial: <a href="https://www.sc-best-practices.org/preamble.html">https://www.sc-best-practices.org/preamble.html</a></li>
+<li>Review paper: Integrative single-cell analysis <a href="https://www.nature.com/articles/s41576-019-0093-7">https://www.nature.com/articles/s41576-019-0093-7</a></li>
+<li>Review paper: Best practices for single-cell analysis across modalities <a href="https://www.nature.com/articles/s41576-023-00586-w">https://www.nature.com/articles/s41576-023-00586-w</a></li>
+<li>Online forum: <a href="https://www.biostars.org/">https://www.biostars.org/</a> <a href="https://bioinformatics.stackexchange.com/">https://bioinformatics.stackexchange.com/</a></li>
+</ol>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>

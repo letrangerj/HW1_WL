@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>A roadmap of whole exome sequencing data analysis</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb
+}
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+  body {
+    padding: 2cm; 
+  }
+}
+</style>
+
+
+</head>
+
+<body>
+
+<p><center></p>
+
+<h1 id="toc_0">A roadmap of whole exome sequencing (WES) data analysis</h1>
+
+<p></center>
+<center>
+Yufeng He (yufenghe@stu.pku.edu.cn), Zexian Zeng(zexianzeng@pku.edu.cn) 
+</center>
+<center>
+Center for life sciences &amp; Center for Quantitative Biology
+</center>
+<center>
+Academy for Advanced Interdisciplinary Studies, Peking University
+</center>
+<center>
+Lab website: http://cqb.pku.edu.cn/zenglab/
+</center></p>
+
+<blockquote>
+<p>Try to evaluate the bioinformatics work objectively, instead of by the impact factor of the journal the study is published. <div style="text-align: right;"> ---Shirley X. Liu&#39; <a href="https://zhuanlan.zhihu.com/p/543291578">blog</a></div></p>
+</blockquote>
+
+<h2 id="toc_1">Preparations of coding</h2>
+
+<ol>
+<li><p>log in your account on the server by</p>
+
+<p><code>ssh -i {Path_to_your_private_key_file} -p 16122 {Your_username}@162.105.160.16</code></p>
+
+<ul>
+<li>If the system of your laptop is windows, you should download and install <a href="https://mobaxterm.mobatek.net">MobaXterm</a></li>
+<li>If you are using MacOS, you can directly use your terminal.</li>
+</ul></li>
+<li><p>Set up your environment variables</p>
+
+<ul>
+<li>  Make sure you are at your root directory after logging in via <code>pwd</code></li>
+<li>  Make a new file namely &quot;.bashrc&quot; via <code>touch .bashrc</code></li>
+<li> Writing the path of conda into your environment variable file by <code>vim .bashrc</code> and copy the following contents into it:</li>
+</ul>
+
+<div><pre><code class="language-shell"># .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+# User specific environment
+if ! [[ &quot;$PATH&quot; =~ &quot;$HOME/.local/bin:$HOME/bin:&quot; ]]
+then
+    PATH=&quot;$HOME/.local/bin:$HOME/bin:$PATH&quot;
+fi
+export PATH
+
+# Uncomment the following line if you don&#39;t like systemctl&#39;s auto-paging feature:
+# export SYSTEMD_PAGER=
+
+# User specific aliases and functions
+
+# &gt;&gt;&gt; conda initialize &gt;&gt;&gt;
+# !! Contents within this block are managed by &#39;conda init&#39; !!
+__conda_setup=&quot;$(&#39;/lustre1/share/miniconda3/bin/conda&#39; &#39;shell.bash&#39; &#39;hook&#39; 2&gt; /dev/null)&quot;
+if [ $? -eq 0 ]; then
+    eval &quot;$__conda_setup&quot;
+else
+    if [ -f &quot;/lustre1/share/miniconda3/etc/profile.d/conda.sh&quot; ]; then
+        . &quot;/lustre1/share/miniconda3/etc/profile.d/conda.sh&quot;
+    else
+        export PATH=&quot;/lustre1/share/miniconda3/bin:$PATH&quot;
+    fi
+fi
+unset __conda_setup
+# &lt;&lt;&lt; conda initialize &lt;&lt;&lt;</code></pre></div>
+
+<ul>
+<li> Type <code>:</code> and then <code>wq!</code>. This will save the changes of .bashrc file.</li>
+<li> Finally, use <code>source .bashrc</code> to activate your environment variables.</li>
+<li> Simply type <code>conda</code> and you&#39;ll see the usage of conda. It works!!!</li>
+</ul></li>
+<li><p>We have installed multiple software that you will use in this course in the miniconda. Make sure all the software is ready via typing them one by one:</p></li>
+</ol>
+
+<div><pre><code class="language-none">bwa
+fastp
+samtools
+gatk</code></pre></div>
+
+<p>If you see no errors and it returns the usage of each tool, congratulations!!!</p>
+
+<p>You need to enter the virtual environment by typing <code>conda activate wes</code></p>
+
+<hr>
+
+<h3 id="toc_2">Pre-class Assignments</h3>
+
+<ol>
+<li> Make sure you can log in your account before the class. (10&#39;) If you have any questions, feel free to ask any teaching assistant in WeChat group. </li>
+<li> How many kinds of operating system do you know? What are their pros and cons? (10&#39;)</li>
+<li>Find the document of common linux commands and see how they work. (40&#39;) <code>ls</code><code>cd</code><code>mkdir</code><code>grep</code><code>find</code><code>mv</code><code>cat</code><code>top</code><code>cat</code><code>free</code><code>exit</code><code>tar</code>
+<code>unzip</code><code>pwd</code><code>echo</code><code>touch</code><code>cp</code><code>vim</code><code>rm</code><code>scp</code></li>
+<li>Preview the tools that we will use to analyze WES data and explain how we can use these commands and how they work. (40&#39;)</li>
+</ol>
+
+<hr>
+
+<h3 id="toc_3">Data</h3>
+
+<p>All the WES data that we will use in this class can be found at</p>
+
+<p><code>/lustre1/share/data/OC_WES</code></p>
+
+<p>You can use <code>cd</code> to get into this directory, and you will find that there are two sets of WES data from the samples of ovarian cancer (OC) and PBMC from one patients. In each directory, you can find 2 files storing biological sequences with extension <code>.fastq</code> or <code>.fq</code> in FASTQ format. They are also compressed with GZIP, so the suffix will be <code>.fastq.gz</code> or <code>.fq.gz</code>.</p>
+
+<p>Now, we have prepared everything that will be used in our class.</p>
+
+<hr>
+
+<h3 id="toc_4">Reference genome</h3>
+
+<p>All the reference genome can be found at </p>
+
+<p><code>/lustre1/share/references</code>.</p>
+
+<hr>
+
+<h2 id="toc_5">1. Deal with FASTQ files.</h2>
+
+<p>Let&#39;s choose any of your favorite FASTQ files, and tell the server the path to that FASTQ file:</p>
+
+<p><code>fastq_filename=&#39;/lustre1/share/data/OC_WES/OC/OC_R1.fq.gz&#39;</code></p>
+
+<p>Usually, you will get a FASTQ file compressed in GZIP format. But if you get one without GZIP compression, it is recommended to compress it via
+<code>gzip {Your_filename.fq}</code>.</p>
+
+<p>Let&#39;s check the contents of the file via</p>
+
+<p><code>less ${fastq_filename}</code>.</p>
+
+<p>Type <code>:</code> and then <code>q</code> to exit.</p>
+
+<p>You will see something like</p>
+
+<div><pre><code class="language-none">@LH00380:102:2252H7LT4:2:1101:40943:1028 1:N:0:CCTCGAAT+TATGGCAC
+GTCTTTGAAAAAAAATTTTGATTTGCTTTTCTGTATTTCTTTTTCAACTTTTAATCTATATTCCCAACTCTAATTCATTCTGTAATAATGTTAACCCCCAAAATTGTATGAACTGTCTTATTTGAATCAAAAGATGAAGTGCCTGAACTG
++
+IIIIIII9IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII-IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII9IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII9IIIII</code></pre></div>
+
+<p>@LH00380  --- the unique instrument name</p>
+
+<p>102       --- the run id</p>
+
+<p>2252H7LT4 --- the flowcell id</p>
+
+<p>2         --- flowcell lane</p>
+
+<p>1101      --- tile number within the flowcell lane</p>
+
+<p>40943     --- &#39;x&#39;-coordinate of the cluster within the tile</p>
+
+<p>1028      --- &#39;y&#39;-coordinate of the cluster within the tile</p>
+
+<p>1         --- the member of a pair, 1 or 2 (paired-end or mate-pair reads only)</p>
+
+<p>N         --- Y if the read is fileterd, N otherwise</p>
+
+<p>0         --- 0 when none of the control bits are on</p>
+
+<p><strong>CCTCGAAT+TATGGCAC --- index sequence</strong></p>
+
+<p><strong>GTCTTTGAAAAAAAA......TGCCTGAACTG --- sequence (A, C, G, T, N)</strong></p>
+
+<p>IIIIIII9II......I9IIIII --- phred quality score</p>
+
+<p><strong>Quality scores</strong> started as numbers (0-40) but have since changed to an ASCII encoding to reduce filesize and make working with this format a bit easier, however they still hold the same information. <strong>ASCII codes</strong> are assigned based on the formula found below. </p>
+
+<p><img src="quality_score.png" alt="ASCII codes"></p>
+
+<p>Many programs require the FastQ format, implying that they will use the quality score in a particular part of the analysis. Common uses are to filter bases or entire reads if a particular quality threshold isn’t met. </p>
+
+<p>You can count the number of sequences like this:</p>
+
+<p><code>echo $(( $(zcat ${fastq_filename} | wc -l) / 4 ))</code>,</p>
+
+<p>or:</p>
+
+<p><code>zcat ${fastq_filename} | wc -l | awk &#39;{print $1/4}&#39;</code></p>
+
+<p>You can also count how many times appear an specific subsequence via:</p>
+
+<p><code>zgrep -c &#39;ATGATGATG&#39; ${fastq_filename}</code>.</p>
+
+<p>Sometimes we will be interested in extracting a small part of the big file to use it for testing our processing methods, ex. the first 1000 sequences (4000 lines):</p>
+
+<p><code>zcat ${fastq_filename} | head -4000 | gzip &gt; {Path_to_save}/{filename}.fq.gz</code></p>
+
+<h2 id="toc_6">2. Quality control</h2>
+
+<p>Before using fastp, you need to confirm you are at your root folder via <code>pwd</code>. If it outputs the path like <code>/home/{your name}</code>, continue the following tutorial. Let&#39;s make a new folder <code>analysis</code> and enter it:</p>
+
+<p><code>mkdir analysis &amp;&amp; cd analysis</code></p>
+
+<p>Ususally, we store the output files in different files. So, we make a sub-folder to store the <code>FASTQ</code> files after quality control:</p>
+
+<p><code>mkdir 0_preprocess &amp;&amp; cd 0_preprocess</code></p>
+
+<p>Now, we make two folders for OC and PBMC, repectively.</p>
+
+<p><code>mkdir OC &amp;&amp; mkdir PBMC</code></p>
+
+<p>Fastp is developed in C++ with multithreading supported and designed to preprocess FASTQ files including quality profiling, filtering, triming, visualization and so on. To get help of fastp, you can simply type</p>
+
+<p><code>fastp</code> or <code>fastp -?</code> or <code>fastp --help</code></p>
+
+<p>As you can see, there are many options. We will only use the simple usage</p>
+
+<p><code>fastp -i in.R1.fq.gz -I in.R2.fq.gz -o out.R1.fq.gz -O out.R2.fq.gz</code>.</p>
+
+<p>Let&#39;s firstly enter <code>OC</code> and see the current working directory:</p>
+
+<p><code>cd OC &amp;&amp; pwd</code></p>
+
+<p>And we can use a variable <code>user</code> to represent your account name.</p>
+
+<p><code>user=teach31</code></p>
+
+<p>Now, you should be at a path like <code>/home/${user}_pkuhpc/analysis/0_preprocess/OC</code> (my account name is teach31_pkuhpc, you should change it to your account name in the following tutorial).</p>
+
+<p>This is the last reminding of adding <strong>path</strong> before your file name. So, it should be like:</p>
+
+<div><pre><code class="language-none">fastp -i /lustre1/share/data/OC_WES/OC/OC_R1.fq.gz -I /lustre1/share/data/OC_WES/OC/OC_R2.fq.gz \
+-o /home/${user}_pkuhpc/analysis/0_preprocess/OC/OC_R1.fq.gz \
+-O /home/${user}_pkuhpc/analysis/0_preprocess/OC/OC_R2.fq.gz</code></pre></div>
+
+<p>You should see the output <code>.fq.gz</code> files. Then we should go to <code>PBMC</code> directory and do the same:</p>
+
+<p><code>cd .. &amp;&amp; cd PBMC &amp;&amp; pwd</code></p>
+
+<div><pre><code class="language-none">fastp -i /lustre1/share/data/OC_WES/PBMC/blood_R1.fq.gz -I /lustre1/share/data/OC_WES/PBMC/blood_R2.fq.gz \
+-o /home/${user}_pkuhpc/analysis/0_preprocess/PBMC/blood_R1.fq.gz \
+-O /home/${user}_pkuhpc/analysis/0_preprocess/PBMC/blood_R2.fq.gz</code></pre></div>
+
+<p>Then you will find the clean FASTQ file in the output directory. Note that this is a simplified version. You should explore more on other options about adapter trimming, duplication, polyG tail trimming and other filtering options.</p>
+
+<h2 id="toc_7">3. Alignment</h2>
+
+<p>In this part, we need to use <code>bwa</code> and <code>samtools</code> to align sequences with reference genome.</p>
+
+<p>First, we go back the <code>analysis</code> folder:</p>
+
+<p><code>cd ../../</code></p>
+
+<p>we use <code>1_alignment</code> to store the outputs</p>
+
+<p><code>mkdir 1_alignment &amp;&amp; cd 1_alignment &amp;&amp; mkdir OC &amp;&amp; mkdir PBMC</code></p>
+
+<p>BWA-MEM is one of three algorithms in BWA and is designed for longer sequences ranged from 70bp to a few megabases. BWA-MEM is faster and more accurate, and is generally recommended. We can use BWA-MEM via:</p>
+
+<div><pre><code class="language-none">bwa mem -t 4 -M -R &#39;@RG\tID:2\tPL:illumina\tSM:OC&#39; \
+/lustre1/share/references/hg38.fa \
+/home/${user}_pkuhpc/analysis/0_preprocess/OC/OC_R1.fq.gz \
+/home/${user}_pkuhpc/analysis/0_preprocess/OC/OC_R2.fq.gz \
+&gt; /home/${user}_pkuhpc/analysis/1_alignment/OC/OC.sam</code></pre></div>
+
+<p>The -t option specifies the number of threads to use, which can speed up the alignment process. </p>
+
+<p>The -M option marks shorter split hits as secondary, which is useful for compatibility with certain downstream tools. </p>
+
+<p>The -G option is not necessary in most cases. It points a read group split by &#39;\t&#39; with the read group identifier (ID), platform (PL), sample (SM), PU (Platform Unit) and LB (DNA preparation library identifier). Not all read group fields are required.</p>
+
+<p>It will take some time for <code>bwa</code> to finish alignment. The other one for PBMC would be:</p>
+
+<div><pre><code class="language-none">bwa mem -t 4 -M -R &#39;@RG\tID:2\tPL:illumina\tSM:blood&#39; \
+/lustre1/share/references/hg38.fa \
+/home/${user}_pkuhpc/analysis/0_preprocess/PBMC/blood_R1.fq.gz \
+/home/${user}_pkuhpc/analysis/0_preprocess/PBMC/blood_R2.fq.gz \
+&gt; /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood.sam</code></pre></div>
+
+<p>SAMtools provide various utilities for manipulating alignments in the SAM format, including sorting, merging, indexing and generating alignments in a per-position format. Here, we use <code>samtools view</code> to convert SAM file to BAM file via</p>
+
+<p><code>samtools view -bS -@ 4 OC.sam &gt; OC.bam</code>.</p>
+
+<p>You can specify available header from the input of SAM file (-S), and output in BAM format (-b). The -@ option specifies the number of threads to use.</p>
+
+<p>Let&#39;s talk about the reasons of this conversion.</p>
+
+<p>SAM files are a type of text file format that contains the alignment information of various sequences that are mapped against reference sequences. These files can also contain unmapped sequences. Since SAM files are a text file format, <strong>they are more readable by humans</strong>.</p>
+
+<p><img src="./sam.png" alt="SAM file"></p>
+
+<p>BAM files contain the same information as SAM files, except they are in <strong>binary file format</strong> which is not readable by humans. On the other hand, BAM files are <strong>smaller and more efficient</strong> for software to work with than SAM files, <strong>saving time and reducing costs of computation and storage</strong>. Alignment data is almost always stored in BAM files and most software that analyzes aligned reads expects to ingest data in BAM format (often with a BAM index file, to be discussed later in this post). </p>
+
+<p>The remainder of this piece will refer to just the BAM file for simplicity, although the data are identical between SAM and BAM files.</p>
+
+<p>Many of the downstream analysis programs that use BAM files actually require a sorted BAM file.  This allows access to reads to be done more efficiently.  To sort a BAM file, you can simply use</p>
+
+<p><code>samtools sort /home/${user}_pkuhpc/analysis/1_alignment/OC/OC.bam -o /home/${user}_pkuhpc/analysis/1_alignment/OC/OC_sorted.bam</code></p>
+
+<p><code>samtools sort /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood.bam -o /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood_sorted.bam</code></p>
+
+<p>You must specify the path and file name of the outputs (-o), and can specify number of threads (-@) and memory (-m) if necessary.</p>
+
+<h2 id="toc_8">4. Mark duplications</h2>
+
+<p>Duplicates are sets of reads pairs that have the same unclipped alignment start and unclipped alignment end. They’re sampled from the exact same template of DNA and are suspected to be non-independent measurements of a sequence, which Violates assump7ons of variant calling. To mark duplications, we will use the famous <code>gatk</code>.</p>
+
+<p>Genome Analysis Toolkit (GATK) is designed to enable the rapid development of efficient and robust analysis. Its scope is now expanding to include somatic short variant calling, and to tackle copy number (CNV) and structural variation (SV). In addition to the variant callers themselves, the GATK also includes many utilities to perform related tasks such as processing and quality control.</p>
+
+<p>Duplications might come from the same input DNA template, so we can assume that reads will have same start position on the reference. GATK identifies duplicated sets, then chooses representative reads based on base quality scores and other criteria. Pratically, you can mark duplications via</p>
+
+<div><pre><code class="language-none">gatk MarkDuplicates -I /home/${user}_pkuhpc/analysis/1_alignment/OC/OC_sorted.bam \
+ -O /home/${user}_pkuhpc/analysis/1_alignment/OC/OC_sorted.markdup.bam \
+ -M /home/${user}_pkuhpc/analysis/1_alignment/OC/OC_sorted.markdup_matrices.txt</code></pre></div>
+
+<div><pre><code class="language-none">gatk MarkDuplicates -I /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood_sorted.bam \
+ -O /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood_sorted.markdup.bam \
+ -M /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood_sorted.markdup_matrices.txt</code></pre></div>
+
+<p>You can specify the file to write statistic metrics of duplications by -M option.</p>
+
+<h2 id="toc_9">5. Base quality score recalibration</h2>
+
+<p>As we mentioned before, FASTQ files contains the quality score for filtering and quality evaluation. Base quality scores are per-base estimates of error emitted by the sequencing machines; they express how confident the machine was that it called the correct base each time. For example, let&#39;s say the machine reads an A nucleotide, and assigns a quality score of Q20 -- in Phred-scale, that means it&#39;s 99% sure it identified the base correctly. </p>
+
+<p>This may seem high, but it does mean that we can expect it to be wrong in one case out of 100; so if we have several billion base calls (we get ~90 billion in a 30x genome), at that rate the machine would make the wrong call in 900 million bases -- which is a lot of bad bases. </p>
+
+<p>Because our short variant calling algorithms rely heavily on the quality score assigned to the individual base calls in each sequence read. This is because the quality score tells us how much we can trust that particular observation to inform us about the biological truth of the site where that base aligns. </p>
+
+<p>Unfortunately the scores produced by the machines are subject to various sources of systematic (non-random) technical error, leading to over- or under-estimated base quality scores in the data. Some of these errors are due to the physics or the chemistry of how the sequencing reaction works, and some are probably due to manufacturing flaws in the equipment.</p>
+
+<p><strong>Base quality score recalibration (BQSR)</strong> is a process in which we apply machine learning to model these errors empirically and adjust the quality scores accordingly. For example we can identify that, for a given run, whenever we called two A nucleotides in a row, the next base we called had a 1% higher rate of error. So any base call that comes after AA in a read should have its quality score reduced by 1%. We do that over several different covariates (mainly sequence context and position in read, or cycle) in a way that is additive. So the same base may have its quality score increased for one reason and decreased for another.</p>
+
+<p><img src="BQSR.jpg" alt=""></p>
+
+<p>So, in order to do BQSR, we can do these two steps: </p>
+
+<p><strong>a.</strong> Generates a recalibration table based on various covariates by calculating all the reads that needs recalibration. </p>
+
+<div><pre><code class="language-none">gatk BaseRecalibrator -R /lustre1/share/references/hg38.fa \
+-I /home/${user}_pkuhpc/analysis/1_alignment/OC/OC_sorted.markdup.bam \
+--known-sites /lustre1/share/references/1000G_phase1.snps.high_confidence.hg38.vcf \
+--known-sites /lustre1/share/references/Mills_and_1000G_gold_standard.indels.hg38.vcf \
+--known-sites /lustre1/share/references/dbsnp_138.hg38.vcf \
+-O /home/${user}_pkuhpc/analysis/1_alignment/OC/OC.recal_data.table</code></pre></div>
+
+<div><pre><code class="language-none">gatk BaseRecalibrator -R /lustre1/share/references/hg38.fa \
+-I /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood_sorted.markdup.bam \
+--known-sites /lustre1/share/references/1000G_phase1.snps.high_confidence.hg38.vcf \
+--known-sites /lustre1/share/references/Mills_and_1000G_gold_standard.indels.hg38.vcf \
+--known-sites /lustre1/share/references/dbsnp_138.hg38.vcf \
+-O /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood.recal_data.table</code></pre></div>
+
+<p>As you can see, we use 3 vcf file from the GATK resource bundle. </p>
+
+<p>1000G<em>phase1.snps.high</em>confidence.hg38.vcf --- the 1000 Genomes Phase I indel calls with high confidence of SNP</p>
+
+<p><img src="./1000G.jpg" alt="dbSNP"></p>
+
+<p>Mills<em>and</em>1000G<em>gold</em>standard.indels.b37.sites.vcf --- one of the best sets of known indels to be used for local realignment </p>
+
+<p>dbsnp_138.hg38.vcf --- A recent dbSNP release (build 138) subsetted to only sites discovered in or before dbSNPBuildID 129, which excludes the impact of the 1000 Genomes project and is useful for evaluation of dbSNP rate and Ti/Tv values at novel sites.</p>
+
+<p><img src="./dbsnp.png" alt="dbSNP"></p>
+
+<p><strong>b.</strong> Apply numerical corrections to each individual basecall based on the patterns identified in <strong>a</strong> (recorded in the recalibration table) and write out the recalibrated data to a new BAM file. The goal of this procedure is to correct for systematic bias that affect the assignment of base quality scores by the sequencer.</p>
+
+<div><pre><code class="language-none">gatk ApplyBQSR -R /lustre1/share/references/hg38.fa \
+-I /home/${user}_pkuhpc/analysis/1_alignment/OC/OC_sorted.markdup.bam \
+--bqsr-recal-file /home/${user}_pkuhpc/analysis/1_alignment/OC/OC.recal_data.table \
+-O /home/${user}_pkuhpc/analysis/1_alignment/OC/OC_sorted.markdup.BQSR.bam</code></pre></div>
+
+<div><pre><code class="language-none">gatk ApplyBQSR -R /lustre1/share/references/hg38.fa \
+-I /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood_sorted.markdup.bam \
+--bqsr-recal-file /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood.recal_data.table \
+-O /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood_sorted.markdup.BQSR.bam</code></pre></div>
+
+<p>This allows us to get more accurate base qualities overall, which in turn improves the accuracy of our variant calls. To be clear, we can&#39;t correct the base calls themselves, i.e. we can&#39;t determine whether that low-quality A should actually have been a T -- but we can at least tell the variant caller more accurately how far it can trust that A. </p>
+
+<h2 id="toc_10"><strong>6. Variant discovery</strong></h2>
+
+<p>Single-nucleotide polymorphisms (SNPs) are the most common form of genetic variation in humans and drive phenotypic variation. In general, there exist two major types of sequence variations, transition and transversion SNPs, as well as insertions and deletions (indels).</p>
+
+<p>The <code>gatk HaplotypeCaller</code> is capable of calling SNPs and indels simultaneously via local de-novo assembly of haplotypes in an active region. In other words, whenever the program encounters a region showing signs of variation, it discards the existing mapping information and completely reassembles the reads in that region. This allows the HaplotypeCaller to be more accurate when calling regions that are traditionally difficult to call, for example when they contain different types of variants close to each other. It also makes the HaplotypeCaller much better at calling indels than position-based callers. </p>
+
+<p>Firstly, HaplotypeCaller defines active regions and determines which regions of the genome it needs to operate on (active regions), based on the presence of evidence for variation. You can use <code>gatk HaplotypeCaller</code> via</p>
+
+<div><pre><code class="language-none">gatk HaplotypeCaller -ERC GVCF \
+-R /lustre1/share/references/hg38.fa \
+-I /home/${user}_pkuhpc/analysis/1_alignment/OC/OC_sorted.markdup.BQSR.bam \
+-D /lustre1/share/references/dbsnp_138.hg38.vcf \
+-O /home/${user}_pkuhpc/analysis/1_alignment/OC/OC.g.vcf</code></pre></div>
+
+<div><pre><code class="language-none">gatk HaplotypeCaller -ERC GVCF \
+-R /lustre1/share/references/hg38.fa \
+-I /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood_sorted.markdup.BQSR.bam \
+-D /lustre1/share/references/dbsnp_138.hg38.vcf \
+-O /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood.g.vcf</code></pre></div>
+
+<p>Given that we have run <code>gatk HaplotypeCaller</code> for OC and blood sample, respectively, we will get 2 <code>.g.vcf</code> file. The <code>vcf</code> stands for vairant call format. These files produced for germline short variant (SNP and indel) calls. </p>
+
+<p>GVCF stands for Genomic VCF. The key difference between a regular VCF and a GVCF is that the GVCF has records for all sites, whether there is a variant call there or not. The goal is to have every site represented in the file in order to do joint analysis of a cohort in subsequent steps. The records in a GVCF include an accurate estimation of how confident we are in the determination that the sites are homozygous-reference or not.</p>
+
+<p><img src="./gvcf.jpg" alt="GVCF file"></p>
+
+<hr>
+
+<h3 id="toc_11">After-class Assignments (1)</h3>
+
+<ol>
+<li>Briefly indroduce the structure and major contens of <code>.vcf</code> file? (15&#39;)</li>
+<li>What information can we get from the header? (15&#39;)</li>
+<li>How many fields are required by VCF format and what are they? And how to interpret the variant call records and genotype? (20&#39;)</li>
+</ol>
+
+<hr>
+
+<p>Secondly, it determines haplotypes by assembly of the active region. For each active region, it builds a De Bruijn-like graph to reassemble the active region and identifies what are the possible haplotypes present in the data. It then realigns each haplotype against the reference haplotype using the Smith-Waterman algorithm in order to identify potentially variant sites.</p>
+
+<p>Now, we mkdir a new directory, <code>mkdir 2_variant_call</code> for combined OC and blood <code>VCF</code> file. We can simply combine both GVCF files via</p>
+
+<div><pre><code class="language-none">gatk CombineGVCFs -R /lustre1/share/references/hg38.fa \
+-V /home/${user}_pkuhpc/analysis/1_alignment/OC/OC.g.vcf \
+-V /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood.g.vcf \
+-O /home/${user}_pkuhpc/analysis/2_variant_call/combined.g.vcf</code></pre></div>
+
+<p>Then, HaplotypeCaller determines likelihoods of the haplotypes given the read data. For each active region, it performs a pairwise alignment of each read against each haplotype using the PairHMM algorithm. This produces a matrix of likelihoods of haplotypes given the read data. These likelihoods are then marginalized to obtain the likelihoods of alleles for each potentially variant site given the read data.</p>
+
+<p>Finally, it assigns sample genotypes. For each potentially variant site, it applies Bayes&#39; rule, using the likelihoods of alleles given the read data to calculate the likelihoods of each genotype per sample given the read data observed for that sample. The most likely genotype is then assigned to the sample.</p>
+
+<p>We can perform joint genotyping on a single input, which may contain one or many samples via</p>
+
+<div><pre><code class="language-none">gatk  GenotypeGVCFs -R /lustre1/share/references/hg38.fa \
+-V /home/${user}_pkuhpc/analysis/2_variant_call/combined.g.vcf \
+-G StandardAnnotation \
+-O /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood_variants.vcf</code></pre></div>
+
+<p>In this way, we get a final <code>.vcf</code> file in which all samples have been jointly genotyped.</p>
+
+<h2 id="toc_12"><strong>7. Variant quality score recalibration</strong></h2>
+
+<p>Variant Quality Score Recalibration (VQSR) is a sophisticated filtering technique applied on the variant callset that uses machine learning to model the technical profile of variants in a training set and uses that to filter out probable artifacts from the callset. </p>
+
+<p>Specifically, VQSR calculates a new quality score called the VQSLOD (for variant quality score log-odds) that takes into account various properties of the variant context not captured in the QUAL score. The purpose of this new score is to enable variant filtering in a way that allows analysts to balance sensitivity (trying to discover all the real variants) and specificity (trying to limit the false positives that creep in when filters get too lenient) as finely as possible. </p>
+
+<p>The VQSR method uses machine learning algorithms to learn from each dataset what is the annotation profile of good variants vs. bad variants, and does so in a way that integrates information from multiple dimensions (like, 5 to 8, typically). It takes the overlap of the training/truth resource sets and of your callset. It models the distribution of these variants relative to the annotations you specified, and attempts to group them into clusters. Then it uses the clustering to assign VQSLOD scores to all variants. Variants that are closer to the heart of a cluster will get a higher score than variants that are outliers. If you are interested in more details of algorithms, try to read the original publications. It will help you improve modeling skills.</p>
+
+<p><img src="VQSR.jpg" alt=""></p>
+
+<p>Now, let&#39;s do variant quality recalibration for SNP and Indel, respectively. To begin with, we need to annotate the variants, so that these annotations can be applied in downstream processing.</p>
+
+<div><pre><code class="language-none">gatk VariantAnnotator \
+-R /lustre1/share/references/hg38.fa \
+-V /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood_variants.vcf \
+-O /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood_variants.anno.vcf \
+-A Coverage \
+--dbsnp /lustre1/share/references/dbsnp_138.hg38.vcf</code></pre></div>
+
+<h4 id="toc_13">* SNP quality recalibration</h4>
+
+<p>We can get a recalibration table file via </p>
+
+<div><pre><code class="language-none">gatk VariantRecalibrator -R /lustre1/share/references/hg38.fa \
+ -V /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood_variants.vcf \
+ --resource:hapmap,known=false,training=true,truth=true,prior=15.0 /lustre1/share/references/hapmap_3.3.hg38.vcf \
+ --resource:omni,known=false,training=true,truth=false,prior=12.0 /lustre1/share/references/1000G_omni2.5.hg38.vcf \
+ --resource:1000G,known=false,training=true,truth=false,prior=10.0 /lustre1/share/references/1000G_phase1.snps.high_confidence.hg38.vcf \
+ --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 /lustre1/share/references/dbsnp_138.hg38.vcf \
+-an QD -an MQ -an MQRankSum -an ReadPosRankSum -an FS -an SOR \
+-mode SNP \
+-O /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.snps.recal \
+--tranches-file /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.snps.tranches \
+--rscript-file /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.snps.plots.R</code></pre></div>
+
+<p>In this case, we use 4 resource datasets that GATK recommends, which are HapMap, Omni, 1000G and dbSNP. The meaning of the following parameters are as followed:</p>
+
+<p>known - The program only uses known sites for reporting purposes (to indicate whether variants are already known or novel)
+training - The program builds the Gaussian mixture model using input variants that overlap with these training sites. 
+truth - The program uses these truth sites to determine where to set the cutoff in VQSLOD sensitivity. 
+prior - A prior probability of being correct</p>
+
+<p><img src="hapmap.png" alt=""></p>
+
+<p>And we expect to get these annotations which should used for calculations:</p>
+
+<ul>
+<li><strong>QualByDepth (QD)</strong> is the variant confidence (from the QUAL field) divided by the unfiltered depth of non-hom-ref samples. This annotation is intended to normalize the variant quality in order to avoid inflation caused when there is deep coverage.</li>
+<li><strong>FisherStrand (FS)</strong> is the Phred-scaled probability that there is strand bias at the site. Strand Bias tells us whether the alternate allele was seen more or less often on the forward or reverse strand than the reference allele. When there little to no strand bias at the site, the FS value will be close to 0.</li>
+<li><strong>StrandOddsRatio (SOR)</strong> is another way to estimate strand bias using a test similar to the symmetric odds ratio test. SOR was created because FS tends to penalize variants that occur at the ends of exons. Reads at the ends of exons tend to only be covered by reads in one direction and FS gives those variants a bad score. SOR will take into account the ratios of reads that cover both alleles.</li>
+<li><strong>RMSMappingQuality (MQ)</strong> is the root mean square mapping quality over all the reads at the site. Instead of the average mapping quality of the site, this annotation gives the square root of the average of the squares of the mapping qualities at the site. It is meant to include the standard deviation of the mapping qualities. Including the standard deviation allows us to include the variation in the dataset. A low standard deviation means the values are all close to the mean, whereas a high standard deviation means the values are all far from the mean.When the mapping qualities are good at a site, the MQ will be around 60.</li>
+<li><strong>MappingQualityRankSumTest (MQRankSum)</strong> is the u-based z-approximation from the Rank Sum Test for mapping qualities. It compares the mapping qualities of the reads supporting the reference allele and the alternate allele. A positive value means the mapping qualities of the reads supporting the alternate allele are higher than those supporting the reference allele; a negative value indicates the mapping qualities of the reference allele are higher than those supporting the alternate allele. A value close to zero is best and indicates little difference between the mapping qualities.</li>
+<li><strong>ReadPosRankSumTest (ReadPosRankSum)</strong> is the u-based z-approximation from the Rank Sum Test for site position within reads. It compares whether the positions of the reference and alternate alleles are different within the reads. Seeing an allele only near the ends of reads is indicative of error, because that is where sequencers tend to make the most errors. A negative value indicates that the alternate allele is found at the ends of reads more often than the reference allele; a positive value indicates that the reference allele is found at the ends of reads more often than the alternate allele. A value close to zero is best because it indicates there is little difference between the positions of the reference and alternate alleles in the reads.</li>
+</ul>
+
+<p>Now, we can perform VQSR by the recalibration table file:</p>
+
+<div><pre><code class="language-none">gatk ApplyVQSR  -R /lustre1/share/references/hg38.fa \
+-V /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood_variants.vcf \
+-O /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.snps.VQSR.vcf \
+--truth-sensitivity-filter-level 99.5 \
+--tranches-file /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.snps.tranches \
+--recal-file /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.snps.recal \
+--mode SNP</code></pre></div>
+
+<p>Now, we have assigned a well-calibrated probability to each variant call in a call set. These probabilities can then be used to filter the variants with a greater level of accuracy and flexibility than can typically be achieved by traditional hard-filter (filtering on individual annotation value thresholds). We can get the SNPs above the threshold, which will be labeled as &quot;PASS&quot; via:</p>
+
+<div><pre><code class="language-none">cat OC_blood.snps.VQSR.vcf | grep &quot;PASS&quot; &gt; OC_blood.snps.filtered.vcf</code></pre></div>
+
+<h4 id="toc_14">* Indel quality recalibration</h4>
+
+<p>Similarly, we get the recalibration table file via</p>
+
+<div><pre><code class="language-none">gatk VariantRecalibrator -R /lustre1/share/references/hg38.fa \
+ -V /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood_variants.vcf \
+ --resource:mills,known=false,training=true,truth=true,prior=12.0 /lustre1/share/references/Mills_and_1000G_gold_standard.indels.hg38.vcf \
+ --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 /lustre1/share/references/dbsnp_138.hg38.vcf \
+-an QD -an ReadPosRankSum -an FS -an SOR \
+-mode INDEL \
+--max-gaussians 4 \
+-O /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.indel.recal \
+--tranches-file /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.indel.tranches \
+--rscript-file /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.indel.plots.R</code></pre></div>
+
+<p>Then, apply VQSR via</p>
+
+<div><pre><code class="language-none">gatk ApplyVQSR  -R /lustre1/share/references/hg38.fa \
+-V /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood_variants.vcf \
+-O /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.indel.VQSR.vcf \
+--truth-sensitivity-filter-level 99.0 \
+--tranches-file /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.indel.tranches \
+--recal-file /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.indel.recal \
+--mode INDEL</code></pre></div>
+
+<h4 id="toc_15">* Merge Indel and SNP</h4>
+
+<p>Simply use <code>MergeVcfs</code> as:</p>
+
+<div><pre><code class="language-none">gatk MergeVcfs -O /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.all.VQSR.vcf \
+-I /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.indel.VQSR.vcf \
+-I /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.snps.VQSR.vcf</code></pre></div>
+
+<h2 id="toc_16"><strong>8. Annotation</strong></h2>
+
+<p>As we have extracted and filtered variantions, it is important and necessary to utilize prior information to funcationally annotate genetic variants. ANNOVAR is designed to annotate single nucleotide variants (SNVs) and insertions/deletions, such as examining their functional consequence on genes, inferring cytogenetic bands, reporting functional importance scores, finding variants in conserved regions, or identifying variants reported in the 1000 Genomes Project and dbSNP. </p>
+
+<p>All the datasets used in our case are stored at:</p>
+
+<p><code>/lustre1/share/annovar/annovar/humandb</code></p>
+
+<p>And you can use all the tools of ANNOVAR at:</p>
+
+<p><code>/lustre1/share/annovar/annovar</code>.</p>
+
+<p>We make a new folder in <code>analysis</code>:</p>
+
+<p><code>mkdir 3_annotation</code></p>
+
+<p>Now, we need to convert the merged <code>.vcf</code> file to the format that ANNOVAR requires as inputs using Perl:</p>
+
+<div><pre><code class="language-none">perl /lustre1/share/annovar/annovar/convert2annovar.pl -format vcf4old \
+     /home/${user}_pkuhpc/analysis/2_variant_call/OC_blood.all.VQSR.vcf \
+     -includeinfo -comment \
+     -outfile /home/${user}_pkuhpc/analysis/3_annotation/OC_blood.all.avinput</code></pre></div>
+
+<p>Then we use the outfile as input to perform annotation：</p>
+
+<div><pre><code class="language-none">perl /lustre1/share/annovar/annovar/table_annovar.pl /home/${user}_pkuhpc/analysis/3_annotation/OC_blood.all.avinput /lustre1/share/annovar/annovar/humandb --buildver hg38 --thread 16 -out /home/${user}_pkuhpc/analysis/3_annotation/OC_blood_anno -remove -protocol refGene,knownGene,cytoBand,exac03,avsnp147,dbnsfp30a -operation g,g,r,f,f,f -nastring . </code></pre></div>
+
+<hr>
+
+<h3 id="toc_17">After-class Assignments (2)</h3>
+
+<p>Refer to the document of GATK and ANNOVAR, explain what each column represents in the output file of <code>OC_blood_anno.hg38_multianno.txt</code> and how to interpret it.  (50&#39;)</p>
+
+<hr>
+
+<p><img src="annovar.jpg" alt=""></p>
+
+<h2 id="toc_18"><strong>9. Somatic mutation</strong></h2>
+
+<p>A somatic mutation describes any alteration at the cellular level in somatic tissues occurring after fertilization. Somatic mutations are a normal part of aging and occur throughout an organism’s life cycle either spontaneously as a result of errors in DNA repair mechanisms or a direct response to stress. Mutations that arise in somatic cells are the driving force of cancer development. Structural variation—in which genomic rearrangement acts to amplify, delete or reorder chromosomal material at scales that range from single genes to entire chromosomes—is an especially important class of somatic mutation. </p>
+
+<p><img src="somatic_mutation.jpg" alt=""></p>
+
+<p>There are dozens of tools to call somatic mutations from NGS or WES data. Here, we introduce two ways of calling somatic mutations: <strong>gatk Mutect2 and Strelka2</strong>. First let&#39;s see our old friend, <code>GATK</code>. Make sure you have been in the virtual environment, <code>wes</code>, of conda. If not, activate it by:</p>
+
+<p><code>conda activate wes</code></p>
+
+<p>And make diretories to store the outputs (don&#39;t forget set <code>user=</code>):</p>
+
+<p><code>mkdir /home/${user}_pkuhpc/analysis/4_somMut</code></p>
+
+<p><code>mkdir /home/${user}_pkuhpc/analysis/4_somMut/gatk</code></p>
+
+<p><img src="mutect2.jpg" alt=""></p>
+
+<p>Mutect2 is a tool of <code>GATK</code> that calls somatic short mutations via local assembly of haplotypes. The three modes are (i) tumor-normal mode where a tumor sample is matched with a normal sample in analysis, (ii) tumor-only mode where a single sample&#39;s alignment data undergoes analysis, and (iii) mitochondrial mode where sensitive calling at high depths is desirable. Here we choose the tumor-normal mode:</p>
+
+<div><pre><code class="language-none">gatk Mutect2 -R /lustre1/share/references/hg38.fa \
+-I /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood_sorted.markdup.BQSR.bam \
+-tumor /home/${user}_pkuhpc/analysis/1_alignment/OC/OC_sorted.markdup.BQSR.bam \
+-O /home/${user}_pkuhpc/analysis/4_somMut/gatk/OC_mutect2.vcf.gz \
+--panel-of-normals /lustre1/share/references/1000g_pon.hg38.vcf.gz \
+-L /lustre1/share/references/S07604514_AllTracks_V6_60_hg38.bed</code></pre></div>
+
+<p>Here, the panel-of-normals option offers a <code>.vcf</code> file of sites observed in normal populations. A panel of normals can be a useful input to help filter out commonly seen sequencing noise that may appear as low allele-fraction somatic variants. The <code>1000g_pon.hg38.vcf.gz</code> is such an open-access <code>.vcf</code> file of more than 1000 people.</p>
+
+<p>Then we apply <code>FilterMutectCalls</code> to filter somatic SNVs and indels called by Mutect2:</p>
+
+<div><pre><code class="language-none">gatk FilterMutectCalls -R /lustre1/share/references/hg38.fa \
+-V /home/${user}_pkuhpc/analysis/4_somMut/gatk/OC_mutect2.vcf.gz \
+-O /home/${user}_pkuhpc/analysis/4_somMut/gatk/OC_somatic.vcf.gz
+</code></pre></div>
+
+<p>FilterMutectCalls now filters based on a single quantity, the probability that a variant is a somatic mutation. It automatically determines the threshold that optimizes the &quot;F score&quot;, the harmonic mean of sensitivity and precision. </p>
+
+<p>Finally, we choose the variants that pass the filtering using <code>SelectVariants</code>:</p>
+
+<div><pre><code class="language-none">gatk SelectVariants \
+-V /home/${user}_pkuhpc/analysis/4_somMut/gatk/OC_somatic.vcf.gz \
+-O /home/${user}_pkuhpc/analysis/4_somMut/gatk/OC_filter.vcf \
+-R /lustre1/share/references/hg38.fa \
+-select &quot;vc.isNotFiltered()&quot;  </code></pre></div>
+
+<p>SelectVariants is a tool that allows you to select a subset of variants from a VCF file based on various criteria, such as annotation values, sample names, concordance or discordance tracks, etc. Now, you get the somatic mutations in <code>OC_filter.vcf</code> via <code>gatk Mutect2</code>. </p>
+
+<p><img src="strelka2.jpg" alt=""></p>
+
+<p>Another option is <code>Strelka2</code>. Strelka2 was firstly published on <strong><em>Nature Methods</em></strong> in 2018 and soon became one of the most popular tools for somatic mutation calling. Strelka2 is a fast and accurate small variant caller optimized for analysis of germline variation in small cohorts and somatic variation in tumor/normal sample pairs. The somatic calling model improves on the original Strelka method for liquid and late-stage tumor analysis by accounting for possible tumor cell contamination in the normal sample. A final empirical variant re-scoring step using random forest models trained on various call quality features has been added to both callers to further improve precision. But, it is an old tool (for bioinformatics) for it applies Python v2.7. So we need a new virtual environment to use Strelka2:</p>
+
+<p><code>conda deactivate</code></p>
+
+<p><code>conda activate strelka</code> </p>
+
+<p>Before we officially run Strelka2, it strongly recommends us to run Manta before. As it described, &quot;For best somatic indel performance, Strelka is designed to be run with the Manta structural variant and indel caller, which provides additional indel candidates up to a given maximum indel size. By design, Manta and Strelka run together with default settings provide complete coverage over all indel sizes (in additional to SVs and SNVs).&quot; So, what is Manta?</p>
+
+<p>Manta was firstly published on <strong><em>Bioinformatics</em></strong> in 2016. It calls structural variants (SVs) and indels from mapped paired-end sequencing reads. It is optimized for analysis of germline variation in small sets of individuals and somatic variation in tumor/normal sample pairs. Manta discovers, assembles and scores large-scale SVs, medium-sized indels and large insertions within a single efficient workflow. So when we run Manta, we actually get &quot;candidates&quot; for the input of Strelka2. </p>
+
+<p>We make a new folder to store the results of manta:</p>
+
+<p><code>mkdir /home/${user}_pkuhpc/analysis/4_somMut/manta</code></p>
+
+<p>Simply run <code>configManta.py</code> to get the configure file of Manta:</p>
+
+<div><pre><code class="language-none">configManta.py \
+--normalBam /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood_sorted.markdup.BQSR.bam \
+--tumorBam /home/${user}_pkuhpc/analysis/1_alignment/OC/OC_sorted.markdup.BQSR.bam \
+--referenceFasta /lustre1/share/references/hg38.fa \
+--runDir /home/${user}_pkuhpc/analysis/4_somMut/manta</code></pre></div>
+
+<p>A configure file stores defines the parameters, options, settings and preferences of the core algorithm of Manta. So we need to actually run Manta by:</p>
+
+<p><code>python /home/${user}_pkuhpc/analysis/4_somMut/manta/runWorkflow.py</code></p>
+
+<p>Now, you can find these candidates at <code>/home/${user}_pkuhpc/analysis/4_somMut/manta/results/</code> called by Manta. Before running strelka, create a folder for Strelka2 results:</p>
+
+<p><code>mkdir /home/${user}_pkuhpc/analysis/4_somMut/strelka</code></p>
+
+<p>Similarly, you can get the configure file of Strelka2 by running:</p>
+
+<div><pre><code class="language-none">configureStrelkaSomaticWorkflow.py \
+--normalBam /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood_sorted.markdup.BQSR.bam \
+--tumorBam /home/${user}_pkuhpc/analysis/1_alignment/OC/OC_sorted.markdup.BQSR.bam \
+--referenceFasta /lustre1/share/references/hg38.fa \
+--indelCandidates /home/${user}_pkuhpc/analysis/4_somMut/manta/results/variants/candidateSmallIndels.vcf.gz \
+--runDir /home/${user}_pkuhpc/analysis/4_somMut/strelka</code></pre></div>
+
+<p>Note that <code>indelCandidates</code> option is exactly the output <code>.vcf</code> files of Manta. You can find the configure files by:</p>
+
+<p><code>cd /home/${user}_pkuhpc/analysis/4_somMut/strelka/</code></p>
+
+<p>And actually run the configured workflow via:</p>
+
+<p><code>python runWorkflow.py -m local -j 4</code></p>
+
+<p>You can find the output somatic mutation files at <code>/home/${user}_pkuhpc/analysis/4_somMut/strelka/</code>. Both the results of <code>gatk Mutect2</code> and <code>Strelka2</code> can be used for downstream analysis. You can also take the overlapping somatic mutations of both as the final results. If you are interested in which tool might gives you better results, you can refer to this benchmarking paper, </p>
+
+<div><pre><code class="language-none">Chen, Z., Yuan, Y., Chen, X. et al. 
+Systematic comparison of somatic variant calling performance among 
+different sequencing depth and mutation frequency. 
+Sci Rep 10, 3501 (2020).</code></pre></div>
+
+<p><strong>(Option) funcational annotation</strong></p>
+
+<p>The last thing we can do is to use <code>gatk Funcotator</code> to annotate functions of these somatic mutations and convert <code>.vcf</code> to <code>.maf</code> for further analysis and visualizaition. </p>
+
+<p>Make a folder for <code>oncotator</code>:</p>
+
+<p><code>mkdir /home/${user}_pkuhpc/analysis/6_funcotator</code></p>
+
+<p>Then, get in to our <code>wes</code> environment:</p>
+
+<p><code>conda deactivate &amp;&amp; conda activate wes</code></p>
+
+<p>And run it though the following code:</p>
+
+<div><pre><code class="language-none">gatk Funcotator \
+  --data-sources-path /lustre1/share/references/funcotator_dataSources.v1.8.hg38.20230908s \
+  -O /home/${user}_pkuhpc/analysis/6_funcotator/OC_funcotator.maf \
+  --output-file-format MAF \
+  -R /lustre1/share/references/hg38.fa \
+  -V /home/${user}_pkuhpc/analysis/4_somMut/gatk/OC_filter.vcf \
+  --ref-version hg38 \
+  --intervals /lustre1/share/references/hg38.exon.interval_list</code></pre></div>
+
+<p>You might note that there is an option, db-dir. It&#39;s a comprehensive datasets of oncomutations collected by Broad Institute. Refer to <code>https://docs.gdc.cancer.gov/Data/File_Formats/MAF_Format/</code>, and you can summarize the differences between <code>.vcf</code> file and <code>.maf</code> file, and their advantages.</p>
+
+<p><img src="maf.jpg" alt=""></p>
+
+<p><strong>(Option) ANNOVAR annotation</strong></p>
+
+<p>You can also use ANNOVAR which we introduced above for annotating somatic mutation.</p>
+
+<p><code>mkdir /home/${user}_pkuhpc/analysis/7_maftools</code></p>
+
+<div><pre><code class="language-none">perl /lustre1/share/annovar/annovar/table_annovar.pl /home/${user}_pkuhpc/analysis/4_somMut/gatk/OC_filter.vcf /lustre1/share/annovar/annovar/humandb/ \
+-buildver hg38 \
+-out /home/${user}_pkuhpc/analysis/7_maftools/OC_anno \
+-remove \
+-protocol refGene,knownGene,cytoBand,exac03,avsnp147,dbnsfp30a \
+-operation g,g,r,f,f,f \
+-nastring . \
+-vcfinput</code></pre></div>
+
+<p>To convert the output file of ANNOVAR, <code>multianno.txt</code>, to <code>.maf</code>, we need to make some adjustments by:</p>
+
+<p><code>grep -v &#39;^Chr&#39; /home/${user}_pkuhpc/analysis/7_maftools/OC_anno.hg38_multianno.txt | cut -f 1-20 | awk -v T=${id} -v N=${id:0:5}_germline &#39;{print $0&quot;\t&quot;T&quot;\t&quot;N}&#39;  &gt; /home/${user}_pkuhpc/analysis/7_maftools/OC_anno.annovar.vcf</code></p>
+
+<p><code>head -1 /home/${user}_pkuhpc/analysis/7_maftools/OC_anno.hg38_multianno.txt | sed &#39;s/Otherinfo/Tumor_Sample_Barcode\tMatched_Norm_Sample_Barcode/&#39; &gt; /home/${user}_pkuhpc/analysis/7_maftools/header</code></p>
+
+<p><code>cat /home/${user}_pkuhpc/analysis/7_maftools/header /home/${user}_pkuhpc/analysis/7_maftools/OC_anno.annovar.vcf &gt; /home/${user}_pkuhpc/analysis/7_maftools/OC_anno.vcf</code></p>
+
+<h2 id="toc_19"><strong>10. Copy number variation / alteration</strong></h2>
+
+<p>Copy number variation (CNV) refers to a circumstance in which the number of copies of a specific segment of DNA varies among different individuals’ genomes. The individual variants may be short or include thousands of bases. These structural differences may have come about through duplications, deletions or other changes and can affect long stretches of DNA. Such regions may or may not contain a gene(s).</p>
+
+<p><img src="cnvs.jpg" alt=""></p>
+
+<p>CNVs are a hallmark of different cancer types, and affect the activity of tumor-associated signaling pathways and anticancer drug sensitivity as well as toxicity.</p>
+
+<p>There are many tools of calling CNVs from WGS or WES data. Here, we choose <code>CNVkit</code> for detecting copy number variants and alterations genome-wide from high-throughput sequencing. CNVkit uses both the on-target reads and the nonspecifically captured off-target reads to calculate log2 copy ratios across the genome for each sample. Briefly, off-target bins are assigned from the genomic positions between targeted regions, with the average off-target bin size being much larger than the average on-target bin to match their read counts. Both the on– and off-target locations are then separately used to calculate the mean read depth within each interval. The on– and off-target read depths are then combined, normalized to a reference derived from control samples, corrected for several systematic biases to result in a final table of log2 copy ratios. A built-in segmentation algorithm can be run on the log2 ratio values to infer discrete copy number segments.</p>
+
+<p><img src="cnv.jpg" alt=""></p>
+
+<p>So, let&#39;s get back to <code>wes</code> environment and make output folder for CNV results:</p>
+
+<p><code>conda deactivate &amp;&amp; conda activate wes &amp;&amp; mkdir /home/${user}_pkuhpc/analysis/5_cnv</code></p>
+
+<p>Now, we can run CNVkit.py via:</p>
+
+<div><pre><code class="language-none">cnvkit.py batch /home/${user}_pkuhpc/analysis/1_alignment/OC/OC_sorted.markdup.BQSR.bam \
+-t /lustre1/share/references/S07604514_AllTracks_V6_60_hg38.bed \
+--normal /home/${user}_pkuhpc/analysis/1_alignment/PBMC/blood_sorted.markdup.BQSR.bam \
+-m hybrid \
+--access /lustre1/share/references/access-5kb.hg38.bed \
+--annotate /lustre1/share/references/refFlat.txt \
+--fasta /lustre1/share/references/Homo_sapiens_assembly38.fasta \
+--output-reference /home/${user}_pkuhpc/analysis/5_cnv/reference.cnn \
+--output-dir /home/${user}_pkuhpc/analysis/5_cnv/ \
+--diagram --scatter</code></pre></div>
+
+<p>The <code>cnvkit.py batch</code> command initiates the CNVkit pipeline on one or more BAM files. The -t option points to a BED file of baited genomic regions for your target capture kit, as provided by your vendor. This is for hybrid capture protocols in which both on- and off-target reads can be used for copy number detection. To run alternative pipelines for targeted amplicon sequencing or whole genome sequencing, use the --method or -m option with value amplicon or wgs, respectively. The default is hybrid.</p>
+
+<p>In case the vendor BED file does not label each region with a corresponding gene name, the --annotate option can add or replace these labels. Gene annotation databases, e.g. RefSeq or Ensembl, are available in “flat” format from UCSC.</p>
+
+<p>You can calculate the sequence-accessible coordinates in chromosomes from the given reference genome, output as a BED file via the --access option.</p>
+
+<p>And when you add <code>--diagram --scatter</code>, you will get 2 plots in <code>.png</code> or <code>.pdf</code> format.</p>
+
+<p><img src="OC_cnv.png" alt=""></p>
+
+<p><img src="chrom_cnv.jpg" alt=""></p>
+
+<h2 id="toc_20"><strong>11. Tumor mutational burden and signatures</strong></h2>
+
+<p>If we want to visualize our mutations, we will need maftools and other R packages. It  provides a comprehensive set of functions for processing <code>MAF</code> files and to perform most commonly used analyses in cancer genomics. So, the <code>MAF</code> files are exactly the ones we generated in the annotation of somatic mutations.</p>
+
+<p>Usually, we will need dozens of samples for downstream analysis, such as tumor mutational burden and mutational signatures. You can find 17 <code>.maf.gz</code> files at <code>/lustre1/share/data/TCGAdata</code>:</p>
+
+<p><code>cd /lustre1/share/data/TCGAdata | ls | wc -l</code>.</p>
+
+<p>They are processed COAD samples from TCGA. Now it&#39;s probably the first time you use R for bioinfomatic analysis. We have prepared an Rscript at</p>
+
+<p><code>/lustre1/share/data/mutVis.r</code></p>
+
+<p>You can simply run it via:</p>
+
+<p><code>cp /lustre1/share/data/mutVis.r ~/analysis/7_maftools/ &amp;&amp; cd ~/analysis/7_maftools/ &amp;&amp; Rscript mutVis.r</code></p>
+
+<p>Then you will get 6 <code>.png</code> files, which are as followed:</p>
+
+<p>Statistics on somatic mutations</p>
+
+<p><img src="mafSummary.png" alt="1. Statistics on somatic mutations"></p>
+
+<p>Oncoplot showing mutations of top 20 genes in all samples</p>
+
+<p><img src="oncoplot.png" alt=""></p>
+
+<p>Tumor mutational burden</p>
+
+<p><img src="tmb.png" alt=""></p>
+
+<p>Cosine similarity between top3 mutational signatures and COSMIC signatures</p>
+
+<p><img src="MutSig_heatmap.png" alt=""></p>
+
+<p>Top3 mutational signatures</p>
+
+<p><img src="signatures.png" alt=""></p>
+
+<p>Enrichment of mutational signature significance </p>
+
+<p><img src="enrichment.png" alt=""></p>
+
+<hr>
+
+<h3 id="toc_21">After-class Assignments (3)</h3>
+
+<ol>
+<li>Run all the codes above (40&#39;)</li>
+<li>Briefly summarize the process of calling somatic mutations (10&#39;)</li>
+</ol>
+
+<hr>
+
+
+
+
+</body>
+
+</html>
