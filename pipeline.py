@@ -32,8 +32,6 @@ print(f"Loaded {len(adatas)} datasets.")
 # filtering
 ## 计算线粒体比例
 for i, ad in enumerate(adatas):
-    # sc.pp.filter_cells(ad, min_genes=200)
-    # sc.pp.filter_genes(ad, min_cells=3)
     ad.var["mt"] = ad.var_names.str.startswith("MT-")
     sc.pp.calculate_qc_metrics(
         ad, qc_vars=["mt"], percent_top=None, log1p=False, inplace=True
@@ -57,13 +55,11 @@ plt.savefig("figures/1c_1.png")
 ## 绘制QC后指标
 adata_new = []
 for i, ad in enumerate(adatas):
-    # 创建副本进行过滤
-    ad_filtered = ad.copy()
+    ad_filtered = ad[(ad.obs.n_genes_by_counts > 2500) & (ad.obs.pct_counts_mt < 15)].copy()
     sc.pp.filter_cells(ad_filtered, min_genes=200)
     sc.pp.filter_genes(ad_filtered, min_cells=3)
-    ad_filtered = ad_filtered[ad_filtered.obs.n_genes_by_counts > 2500, :]
-    ad_filtered = ad_filtered[ad_filtered.obs.pct_counts_mt < 15, :]
     adata_new.append(ad_filtered)
+    del ad  # 释放内存
 
 fig, axes = plt.subplots(3, 4, figsize=(12, 8))
 plt.suptitle("After QC")
@@ -83,11 +79,14 @@ plt.savefig("figures/1c_2.png")
 for i, ad in enumerate(adata_new):
     sc.pp.normalize_total(ad, target_sum=1e4)
     sc.pp.log1p(ad)
+    
+print("QC and normalization completed.")
 
 # %%
 # 2. Batch Effect (Harmony)
 import scanpy.external as sce
 
+print("Starting batch effect correction with Harmony...")
 ## 合并数据
 adata_combined = adata_new[0].concatenate(
     adata_new[1:],
@@ -98,11 +97,20 @@ adata_combined = adata_new[0].concatenate(
 
 ## High variable genes: 计算高变基因但不进行过滤，保留所有基因用于后续标记基因分析（否则可能找不到marker）
 sc.pp.highly_variable_genes(
-    adata_combined, min_mean=0.0125, max_mean=3, min_disp=0.5, batch_key="sample"
+    adata_combined, min_mean=0.0125, 
+    max_mean=3, min_disp=0.5, 
+    batch_key="sample"
 )
+
+### 转化为稀疏矩阵以节省内存
+import scipy.sparse as sp
+if not sp.issparse(adata_combined.X):
+    print("Converting to sparse matrix format...")
+    adata_combined.X = sp.csr_matrix(adata_combined.X)
+
 # 只使用高变基因进行降维，但保留所有基因在数据中
 adata_combined.layers["scaled"] = adata_combined.X.copy()
-sc.pp.scale(adata_combined, max_value=10, layer="scaled")
+sc.pp.scale(adata_combined, max_value=10, layer="scaled", zero_center=False)
 sc.tl.pca(adata_combined, svd_solver="arpack", use_highly_variable=True)
 adata_before = adata_combined.copy()
 
@@ -110,12 +118,11 @@ adata_before = adata_combined.copy()
 sce.pp.harmony_integrate(adata_combined, key="sample")
 
 ## 校正后流程 - 使用高变基因进行PCA
-sc.tl.pca(adata_combined, svd_solver="arpack", use_highly_variable=True)
-sc.pp.neighbors(adata_combined, n_neighbors=10, n_pcs=40)
+sc.pp.neighbors(adata_combined, n_neighbors=10, n_pcs=40, use_rep="X_pca_harmony")
 sc.tl.umap(adata_combined)
 
 ## 校正前流程（无需重复计算PCA）
-sc.pp.neighbors(adata_before, n_neighbors=10, n_pcs=40)
+sc.pp.neighbors(adata_before, n_neighbors=10, n_pcs=40, use_rep="X_pca")
 sc.tl.umap(adata_before)
 
 ## UMAP/t-SNE
@@ -136,59 +143,87 @@ sc.pl.umap(
 
 sc.tl.tsne(adata_before, use_rep="X_pca")
 sc.pl.tsne(adata_before, color="sample", save="3b_3_tSNE_Before.png", show=False)
+del adata_before  # 释放内存
 
 sc.tl.tsne(adata_combined, use_rep="X_pca_harmony")
 sc.pl.tsne(adata_combined, color="sample", save="3b_3_tSNE_After.png", show=False)
 
+adata_combined.write('./data/adata_processed.h5ad')
+print("Batch effect correction completed and data saved.")
+
+# 释放内存
+del adata_combined
+import gc
+gc.collect()
+print("Memory released.")
+
 # %%
 # 3. Cell Clustering and Annotation
 
+## Load processed data
+adata = sc.read('./data/adata_processed.h5ad')
+
 ## Marker Genes from Figure 5e
-megakaryocyte_markers = ["ITGA3", "ITGA6", "GP1BA", "GP9", "F2R", "SELP"]
+megakaryocyte_markers = ["ITGA3", "ITGA6", "GP1BA", "GP9", "F2R"]
 erythroid_markers = ["GYPA", "KLF1", "EPB42"]
 progenitor_markers = ["ANXA1", "CD44", "LMO4"]
 cd53_marker = ["CD53"]
 
 
 ## Cluster
-sc.tl.leiden(adata_combined, resolution=0.5)
-sc.tl.rank_genes_groups(adata_combined, 'leiden', method='wilcoxon')
+sc.tl.leiden(adata, resolution=0.5)
+sc.tl.rank_genes_groups(adata, 'leiden', method='wilcoxon')
 
-sc.pl.dotplot(adata_combined,
+sc.pl.dotplot(adata,
               megakaryocyte_markers + erythroid_markers +
               progenitor_markers + cd53_marker,
               groupby='leiden',
               save="3a_markers_dotplot.png")
 
-def annotation_clusters(adata):
-    cluster_annotation = {}
-    for cluster_id in adata.obs['leiden'].cat.categories:
-        cluster_data = adata[adata.obs['leiden'] == cluster_id]
-        mega_expr = cluster_data[:, megakaryocyte_markers].X.mean()
-        eryth_expr = cluster_data[:, erythroid_markers].X.mean()
-        prog_expr = cluster_data[:, progenitor_markers].X.mean()
-        cd53_expr = cluster_data[:, cd53_marker].X.mean()
-        
-        # 根据表达模式注释
-        if eryth_expr > 0.5 and mega_expr < 0.2:
-            cluster_annotation[cluster_id] = "C1: EB"
-        elif eryth_expr > 0.2 and eryth_expr < 0.5 and prog_expr > 0.3:
-            cluster_annotation[cluster_id] = "C2: EB-like"
-        elif prog_expr > 0.5 and eryth_expr < 0.2 and mega_expr > 0.2:
-            cluster_annotation[cluster_id] = "C3: iPEM"
-        elif mega_expr > 0.5 and eryth_expr < 0.2:
-            if cd53_expr > 0.3:
-                cluster_annotation[cluster_id] = "C5: iMK-2"
-            else:
-                cluster_annotation[cluster_id] = "C4: iMK-1"
-        else:
-            cluster_annotation[cluster_id] = f"Unknown_{cluster_id}"
+## 用scanpy内置的scoring功能annotate
+def annotation_with_scoring(adata):
+    # 计算每组基因的score
+    sc.tl.score_genes(adata, megakaryocyte_markers, score_name='mega_score')
+    sc.tl.score_genes(adata, erythroid_markers, score_name='eryth_score')
+    sc.tl.score_genes(adata, progenitor_markers, score_name='prog_score')
     
-    return cluster_annotation
+    # 基于score注释
+    def assign_celltype(row):
+        scores = {
+            'mega': row['mega_score'],
+            'eryth': row['eryth_score'],
+            'prog': row['prog_score']
+        }
+        
+        max_score_type = max(scores, key=scores.get)
+        
+        if max_score_type == 'eryth':
+            if scores['prog'] > scores['eryth'] * 0.5:
+                return "C2: EB-like"
+            return "C1: EB"
+        elif max_score_type == 'prog':
+            return "C3: iPEM"
+        elif max_score_type == 'mega':
+            if row['CD53'] > adata.obs['CD53'].median():
+                return "C5: iMK-2"
+            return "C4: iMK-1"
+        return "Unknown"
+    
+    # 获取CD53表达
+    cd53_expr = adata[:, 'CD53'].X
+    if hasattr(cd53_expr, 'toarray'):
+        cd53_expr = cd53_expr.toarray().flatten()
+    adata.obs['CD53'] = cd53_expr
+    
+    adata.obs['cell_type_v2'] = adata.obs.apply(assign_celltype, axis=1)
+    
+    return adata
 
-cluster_names_dict = annotation_clusters(adata_combined)
-adata_combined.obs['cell_type'] = adata_combined.obs['leiden'].map(cluster_names_dict)
+adata = annotation_with_scoring(adata)
 
-sc.pl.umap(adata_combined, color=['leiden', 'cell_type'], 
-           save="3b_annotated_clusters.png", show=False)
+sc.pl.umap(adata, 
+           color=['leiden', 'cell_type'], 
+           save="3b_annotated_clusters.png")
 
+
+# %%
