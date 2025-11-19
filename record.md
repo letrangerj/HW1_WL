@@ -15,27 +15,30 @@
 “cells with a very small
 library size (<2,500) and a very high (>0.15) mitochondrial genome transcript ratio were removed”
 
+## 2. Batch Effect Removal
+### a. 使用Harmony去除batch effect
+文章中使用的方法为Mutual Nearest Neighbor (MNN)，这是由于文章的预处理流程依赖于Monocle3。这个方法会在局域中寻找最近邻，因此在处理不同batch间相似性/重合较高时会较有优势，并且会给出一个“修正后的表达矩阵”。
+
+我希望使用课上教的Harmony算法，它与scanpy的流程是十分契合且匹配，并且速度上具有优势。Harmony在处理连续轨迹时能很好的保存这部分信息，这对于后续进行轨迹分析有优势。
 
 ## 3. Cell Clustering and Annotation
 ### a. 根据figure 5e-g:
 得到marker genes如下：
 ```python
-megakaryocyte_markers = ["ITGA3", "ITGA6", "GP1BA", "GP9", "F2R", "SELP"]
-erythroid_markers = ["GYPA", "KLF1", "EPB42"]
-progenitor_markers = ["ANXA1", "CD44", "LMO4"]
+eryth_genes = ["GYPA", "KLF1", "EPB42"]
+prog_genes = ["ANXA1", "CD44", "LMO4"]
+mega_genes = ["ITGA3", "ITGA6", "GP1BA", "GP9", "F2R", "CD53"]
 ```
-并且有
+并且由文章可知：
 ```
   # 伪代码逻辑
-if erythroid_markers == "高" and megakaryocyte_markers == "低":
+if eryth_genes == "高":
     cluster = "C1"
-    
-elif erythroid_markers == "中" and progenitor_markers == "上调":
+elif eryth_genes == "中" and prog_genes == "上调":
     cluster = "C2"
-    
-elif progenitor_markers == "高" and erythroid_markers == "降低" and megakaryocyte_markers == "开始上调":
+elif prog_genes == "高":
     cluster = "C3"
-    
-elif megakaryocyte_markers == "高" and erythroid_markers == "低":
+elif mega_genes == "高" and eryth_genes == "低":
     cluster = "C4 or C5"  # 需要CD53进一步区分, C5的CD53高
 ```
+leiden之后绘制不同的dotplot，将它们分配至不同的cell type完成了cell type annotation，如下

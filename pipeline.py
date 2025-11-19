@@ -1,12 +1,12 @@
 # %%
-import os
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import scanpy as sc
 import warnings
 
+warnings.filterwarnings("ignore", message="dendrogram data not found")
+warnings.filterwarnings("ignore", message="Groups are not reordered")
 # %%
 # Load datasets
 result_file = "analysis_results.h5ad"
@@ -96,8 +96,6 @@ print("QC and normalization completed on merged data.")
 import scanpy.external as sce
 
 print("Starting batch effect correction with Harmony...")
-## 合并数据
-# 数据已在 QC 前合并并过滤，直接复用 adata_combined
 
 ## High variable genes: 计算高变基因但不进行过滤，保留所有基因用于后续标记基因分析（否则可能找不到marker）
 sc.pp.highly_variable_genes(
@@ -163,7 +161,7 @@ print("Memory released.")
 
 # %%
 # 3. Cell Clustering and Annotation
-
+# Using the processed data after batch correction and leiden clustering
 import scanpy as sc
 import numpy as np
 import pandas as pd
@@ -174,127 +172,133 @@ adata = sc.read('./data/adata_processed.h5ad')
 
 eryth_genes = ["GYPA", "KLF1", "EPB42"]
 prog_genes = ["ANXA1", "CD44", "LMO4"]
-mega_genes = ["ITGA3", "ITGA6", "GP1BA", "GP9", "F2R"]
-cd53_genes = ["CD53"]
+mega_genes = ["ITGA3", "ITGA6", "GP1BA", "GP9", "F2R", "CD53"]
+marker_genes = {
+    'Erythroid (EB)': eryth_genes,
+    'Precursor (iPEM)': prog_genes,
+    'Megakaryocyte (iMK)': mega_genes
+}
 
-# Leiden clustering, resolution is the same as paper
-sc.tl.leiden(adata, resolution=1.5e-5, key_added='leiden')
+sc.tl.leiden(adata, resolution=0.35)
+sc.tl.dendrogram(adata, groupby='leiden')
+sc.pl.dotplot(adata, marker_genes, groupby="leiden")
 
-print(f"Number of clusters: {adata.obs['leiden'].nunique()}")
-print(f"Cluster sizes:\n{adata.obs['leiden'].value_counts().sort_index()}")
+# %%
+# Cell Type Annotation based on Marker Genes
+cluster_annotation = {
+    '1': 'C1_EB',
+    '2': 'C1_EB',
+    '6': 'C1_EB',
+    '3': 'C2_EB-like',
+    '5': 'C2_EB-like',
+    '0': 'C3_iPEM',
+    '7': 'C3_iPEM',
+    '9': 'C3_iPEM',
+    '10': 'C3_iPEM',
+    '11': 'C3_iPEM',    # CD53+ but MK markers are too weak to be C5
+    '4': 'C4_iMK-1',    # High MK markers, Low CD53
+    '8': 'C5_iMK-2'     # High MK markers, High CD53
+}
+adata.obs['cell_type'] = adata.obs['leiden'].map(cluster_annotation).astype('category')
+sc.pl.dotplot(
+    adata, 
+    marker_genes, 
+    groupby="cell_type", 
+    standard_scale='var',
+    dendrogram=True
+)
+sc.pl.tsne(
+    adata, 
+    color="cell_type", 
+    legend_loc="on data", 
+    title="Cell Type Annotation in t-SNE",
+)
+sc.pl.umap(
+    adata, 
+    color="cell_type", 
+    legend_loc="on data", 
+    title="Cell Type Annotation in UMAP",
+)
+adata.write('./data/adata_annotated.h5ad')
+# %%
+# 3c. Plot heatmap and violin plot for marker genes within annotated cell types
 
-# CALCULATE GENE SCORES
-sc.tl.score_genes(adata, eryth_genes, score_name='erythroid_score')
-sc.tl.score_genes(adata, prog_genes, score_name='progenitor_score')
-sc.tl.score_genes(adata, mega_genes, score_name='megakaryocyte_score')
+# 改名
+cluster_name_map = {
+    'C1_EB': 'C1',
+    'C2_EB-like': 'C2',
+    'C3_iPEM': 'C3',
+    'C4_iMK-1': 'C4',
+    'C5_iMK-2': 'C5'
+}
+sample_name_map = {
+    'GSM6304413_EB_D0': 'D0',
+    'GSM6304414_iMK_D3': 'D3',
+    'GSM6304415_iMK_D5': 'D5',
+    'GSM6304416_iMK_D7': 'D7'
+}
+adata.obs['cell_type'] = adata.obs['cell_type'].cat.rename_categories(cluster_name_map)
 
-# Get CD53 expression
-if 'CD53' in adata.var_names:
-    cd53_expr = adata[:, 'CD53'].X
-    if hasattr(cd53_expr, 'toarray'):
-        cd53_expr = cd53_expr.toarray().flatten()
-    else:
-        cd53_expr = cd53_expr.flatten()
-    adata.obs['CD53_expression'] = cd53_expr
-else:
-    adata.obs['CD53_expression'] = 0
-    print("Warning: CD53 not found")
+sc.pl.dotplot(
+    adata,
+    marker_genes,
+    groupby="cell_type",
+    standard_scale="var",   
+    cmap="viridis",         
+    swap_axes=True,         
+    dot_max=1.0,           
+    title="Heatmap of Marker Genes by Cell Type",
+    show=True,
+    save="3c_1_Dotplot_Marker_Genes.png"
+)
+sc.pl.stacked_violin(
+    adata,
+    marker_genes,
+    groupby="cell_type",
+    swap_axes=True,         
+    dendrogram=False,       
+    standard_scale=None,    
+    cmap="viridis",      
+    row_palette="tab20",
+    show=True,
+    title="Violin Plot of Marker Genes by Cell Type",
+    save="3c_2_StackedViolin_Marker_Genes.png"
+)
 
-# ANNOTATE CELL TYPES
-# Normalize scores to 0-1 range for comparison
-for score in ['erythroid_score', 'progenitor_score', 'megakaryocyte_score']:
-    score_min = adata.obs[score].min()
-    score_max = adata.obs[score].max()
-    adata.obs[f'{score}_norm'] = (adata.obs[score] - score_min) / (score_max - score_min)
+# Visualize sample proportions for each cell type cluster
+# 计算频率矩阵
+freq_table = pd.crosstab(adata.obs['cell_type'], adata.obs['sample'])
+freq_table_norm = freq_table.div(freq_table.sum(axis=1), axis=0)
+freq_table_norm.rename(index=cluster_name_map, columns=sample_name_map, inplace=True)
+freq_table_norm.plot(
+    kind='bar', 
+    stacked=True,  
+    colormap='Set3',
+    figsize=(5, 4),
+    width=0.8,
+    edgecolor='none',
+    title='Sample Proportions in Each Cell Type Cluster',
+    ylabel='Proportion',
+    xlabel='Cell Type Cluster'
+)
+plt.savefig("figures/3c_3_Sample_Proportions_by_Cell_Type.png")
 
-def assign_celltype_minimal(row):
-    """
-    Minimal annotation based only on gene expression scores.
-    Logic:
-    - High erythroid, low mega → C1 (EB)
-    - Medium erythroid + progenitor → C2 (EB-like)
-    - High progenitor OR balanced eryth+mega → C3 (iPEM)
-    - High mega + low CD53 → C4 (iMK-1)
-    - High mega + high CD53 → C5 (iMK-2)
-    """
+# %% 4. GO Enrichment Analysis
+## a. 2 cluster's GO enrichment analysis
+
+clusters = ['C1', 'C3']
+for cluster in clusters:
+    adata_cluster = adata[adata.obs['cell_type'] == cluster]
+    sc.tl.rank_genes_groups(
+        adata_cluster,
+        groupby='sample',
+        method='t-test',
+        corr_method='benjamini-hochberg'
+    )
+    sc.pl.rank_genes_groups_heatmap(
+        adata_cluster,
+        n_genes=10,
+        groupby='sample',
+        show=True
+    )
     
-    eryth = row['erythroid_score_norm']
-    prog = row['progenitor_score_norm']
-    mega = row['megakaryocyte_score_norm']
-    cd53 = row['CD53_expression']
-    
-    # Thresholds
-    HIGH = 0.6
-    MED = 0.35
-    LOW = 0.25
-    
-    # C1: EB - Dominant erythroid
-    if eryth > HIGH and mega < LOW:
-        return "C1_EB"
-    
-    # C2: EB-like - Erythroid with emerging progenitor features
-    if eryth > MED and prog > MED and mega < MED:
-        return "C2_EB-like"
-    
-    # C3: iPEM - High progenitor OR balanced intermediate state
-    if prog > HIGH:
-        return "C3_iPEM"
-    if eryth > MED and mega > MED and abs(eryth - mega) < 0.3:
-        return "C3_iPEM"
-    
-    # C4/C5: iMK - Dominant megakaryocyte
-    if mega > HIGH:
-        cd53_median = adata.obs['CD53_expression'].median()
-        if cd53 > cd53_median:
-            return "C5_iMK-2"
-        else:
-            return "C4_iMK-1"
-
-    return f"unknown"
-
-adata.obs['cell_type'] = adata.obs.apply(assign_celltype_minimal, axis=1)
-
-# 1. UMAP with annotations
-fig, axes = plt.subplots(2, 2, figsize=(15, 10))
-
-sc.pl.umap(adata, color='cell_type', ax=axes[0, 0], show=False, title='Cell Type')
-sc.pl.umap(adata, color='erythroid_score', ax=axes[0, 1], show=False, 
-           title='Erythroid Score', cmap='Reds')
-sc.pl.umap(adata, color='progenitor_score', ax=axes[1, 0], show=False,
-           title='Progenitor Score', cmap='Greens')
-sc.pl.umap(adata, color='megakaryocyte_score', ax=axes[1, 1], show=False,
-           title='Megakaryocyte Score', cmap='Blues')
-
-plt.tight_layout()
-plt.show()
-
-# 2. Dotplot of marker genes
-all_markers = eryth_genes + prog_genes + mega_genes + cd53_genes
-sc.pl.dotplot(adata, all_markers, groupby='cell_type',
-              figsize=(8, 4))
-
-# 3. Stacked violin plots
-sc.pl.stacked_violin(adata, all_markers, groupby='cell_type',
-                     figsize=(10, 4))
-# 4. Score distributions by cell type
-fig, axes = plt.subplots(1, 3, figsize=(15, 4))
-
-cell_types = adata.obs['cell_type'].cat.categories
-scores = ['erythroid_score', 'progenitor_score', 'megakaryocyte_score']
-titles = ['Erythroid Score', 'Progenitor Score', 'Megakaryocyte Score']
-
-for idx, (score, title) in enumerate(zip(scores, titles)):
-    data = [adata.obs[adata.obs['cell_type'] == ct][score].values 
-            for ct in cell_types]
-    axes[idx].violinplot(data, positions=range(len(cell_types)), 
-                         showmeans=True, showmedians=True)
-    axes[idx].set_xticks(range(len(cell_types)))
-    axes[idx].set_xticklabels(cell_types, rotation=45, ha='right')
-    axes[idx].set_ylabel('Score')
-    axes[idx].set_title(title)
-    axes[idx].grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-
-print("Analysis completed.")
