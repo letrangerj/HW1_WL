@@ -42,3 +42,7 @@ elif mega_genes == "高" and eryth_genes == "低":
     cluster = "C4 or C5"  # 需要CD53进一步区分, C5的CD53高
 ```
 leiden之后绘制不同的dotplot，将它们分配至不同的cell type完成了cell type annotation，如下
+
+## 4. GO Enrichment for Cell Cluster Marker Genes
+选择 C1 和 C3 进行GO分析，结果如下表
+（使用的包为gseapy的enrichr函数）
