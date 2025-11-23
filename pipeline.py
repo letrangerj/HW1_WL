@@ -350,52 +350,54 @@ for cluster in clusters:
 
 # %%
 # Advanced Topic
-import cellrank as cr
 import scanpy as sc
 import numpy as np
+import matplotlib.pyplot as plt
 
 # 1. Prepare Data (Load your processed adata)
 adata = sc.read("./data/adata_annotated.h5ad") # Uncomment if loading fresh
-
-# 2. Re-compute Neighbors using your Batch-Corrected PCA
-# CellRank relies heavily on the nearest neighbor graph.
-sc.pp.neighbors(adata, use_rep="X_pca_harmony", n_neighbors=30)
-
-# 3. Compute Diffusion Pseudotime (DPT) to define "Direction"
-# We need to set a root cell (C1_EB) to tell CellRank where differentiation starts.
-# This creates the "clock" that drives the flow.
+# 步骤 1: 设置起点 (Root Cell)
+# 假设 C1 (Erythroblast) 是分化的起点，我们需要找到一个属于 C1 的细胞作为根节点
+# 将 'C1' 替换为你标注的确切名称，如 'C1_EB'
 root_cell_type = "C1" 
-# Find the index of a cell in the root cluster
-root_ix = np.where(adata.obs["cell_type"] == root_cell_type)[0][0]
-adata.uns["iroot"] = root_ix
-sc.tl.dpt(adata) 
+root_cells = np.flatnonzero(adata.obs["cell_type"] == root_cell_type)
+adata.uns["iroot"] = root_cells[0]  # 随机选择该类型中的一个细胞作为计算起点
 
-# 4. Initialize CellRank Kernel
-# Since we don't have RNA velocity, we use PseudotimeKernel.
-# It directs the edges of the graph from low DPT (early) to high DPT (late).
-pk = cr.kernels.PseudotimeKernel(adata, time_key="dpt_pseudotime")
-pk.compute_transition_matrix()
+# 步骤 2: 计算 Diffusion Map 和 DPT (伪时间)
+sc.tl.diffmap(adata)
+sc.tl.dpt(adata)  # 计算完成后，结果存储在 adata.obs['dpt_pseudotime']
+# 步骤 3: 构建 PAGA 图 (轨迹拓扑结构)
+sc.tl.paga(adata, groups="cell_type")
 
-# 5. Initialize Estimator & Identify Terminal States (Fate Endpoints)
-# GPCCA is the standard estimator to find "Macrostates" (Start/End points)
-g = cr.estimators.GPCCA(pk)
-print("Computing terminal states...")
-g.compute_macrostates(n_states=3, cluster_key="cell_type") 
+# %%
+# 步骤 4: 可视化 (轨迹树 & 伪时间)
+# 使用 PAGA 初始化 draw_graph 布局 (这是产生类似 Monocle "树状图" 的关键)
+sc.pl.paga(adata, plot=False)  # 预计算
+sc.tl.draw_graph(adata, init_pos="paga")
 
-# Automatically identify which macrostates are "terminal" (endpoints)
-# We expect iMK-1 and iMK-2 to be terminal.
-g.predict_terminal_states() 
+# 绘图：左图为细胞类型轨迹，右图为伪时间着色
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-# Visualize where CellRank thinks the endpoints are
-g.plot_macrostates(which="terminal", legend_loc="right", title="Identified Terminal States")
+# 图 1: 轨迹连接图 (Topology)
+sc.pl.draw_graph(
+    adata, 
+    color="cell_type", 
+    legend_loc="on data", 
+    title="Trajectory (PAGA Graph)",
+    ax=axes[0],
+    show=False
+)
 
-# 6. Compute Fate Probabilities (Lineage Drivers)
-# This calculates the probability of every cell reaching each terminal state
-g.compute_fate_probabilities()
+# 图 2: 伪时间分布 (Pseudotime)
+sc.pl.draw_graph(
+    adata, 
+    color="dpt_pseudotime", 
+    color_map="viridis", 
+    title="Monocle-style Pseudotime",
+    ax=axes[1],
+    show=False
+)
 
-# 7. Visualization
-# Visualize the probability of becoming iMK-1 vs iMK-2 on the UMAP
-g.plot_fate_probabilities(same_plot=True, title="Fate Probabilities (iMK-1 vs iMK-2)")
-
-# Circular projection (optional but very cool for bifurcation)
-cr.pl.circular_projection(adata, keys=["cell_type", "sample"], legend_loc="right")
+plt.tight_layout()
+plt.savefig("figures/5_Trajectory_Analysis.png")
+plt.show()
