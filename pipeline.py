@@ -34,8 +34,8 @@ print(f"Loaded {len(adatas)} datasets.")
 # Merge datasets BEFORE QC
 adata_raw_combined = adatas[0].concatenate(
     adatas[1:],
-    batch_key="sample",  # 标记原始来源
-    batch_categories=subdata_dirs,  # 名称
+    batch_key="sample",  
+    batch_categories=subdata_dirs,  
     index_unique="-",
 )
 
@@ -109,9 +109,7 @@ sc.pp.highly_variable_genes(
 ### 转化为稀疏矩阵以节省内存
 import scipy.sparse as sp
 
-if not sp.issparse(adata_combined.X):
-    print("Converting to sparse matrix format...")
-    adata_combined.X = sp.csr_matrix(adata_combined.X)
+adata_combined.X = sp.csr_matrix(adata_combined.X)
 
 # 只使用高变基因进行降维，但保留所有基因在数据中
 adata_combined.layers["scaled"] = adata_combined.X.copy()
@@ -184,7 +182,7 @@ marker_genes = {
 
 sc.tl.leiden(adata, resolution=0.35)
 sc.tl.dendrogram(adata, groupby="leiden")
-sc.pl.dotplot(adata, marker_genes, groupby="leiden")
+sc.pl.dotplot(adata, marker_genes, groupby="leiden", save="3c_1_dotplot.png")
 
 # %%
 # Cell Type Annotation based on Marker Genes
@@ -211,12 +209,14 @@ sc.pl.tsne(
     color="cell_type",
     legend_loc="on data",
     title="Cell Type Annotation in t-SNE",
+    save="3b_1_tSNE_Cell_Type.png"
 )
 sc.pl.umap(
     adata,
     color="cell_type",
     legend_loc="on data",
     title="Cell Type Annotation in UMAP",
+    save="3b_2_UMAP_Cell_Type.png"
 )
 # %%
 # 3c. Plot heatmap and violin plot for marker genes within annotated cell types
@@ -317,7 +317,7 @@ for cluster in clusters:
     enrichr_results[cluster] = enr.results
 
 # %%
-# 4b. Visualize GO enrichment results
+# 4b. GO可视化
 import seaborn as sns
 
 for cluster in clusters:
@@ -345,59 +345,22 @@ for cluster in clusters:
     plt.ylabel("")
     # plt.tight_layout()
 
-    # plt.savefig(f"GO_Analysis_{cluster}_Beautiful.png", dpi=300, bbox_inches='tight')
+    plt.savefig(f"figures/GO_Analysis_{cluster}.png", dpi=300, bbox_inches='tight')
     plt.show()
 
 # %%
-# Advanced Topic
+# Advanced Topic，使用monocle3进行轨迹推断分析，这里准备所需要的文件
 import scanpy as sc
-import numpy as np
-import matplotlib.pyplot as plt
+import pandas as pd
+from scipy import io
+import scipy.sparse as sp
 
-# 1. Prepare Data (Load your processed adata)
-adata = sc.read("./data/adata_annotated.h5ad") # Uncomment if loading fresh
-# 步骤 1: 设置起点 (Root Cell)
-# 假设 C1 (Erythroblast) 是分化的起点，我们需要找到一个属于 C1 的细胞作为根节点
-# 将 'C1' 替换为你标注的确切名称，如 'C1_EB'
-root_cell_type = "C1" 
-root_cells = np.flatnonzero(adata.obs["cell_type"] == root_cell_type)
-adata.uns["iroot"] = root_cells[0]  # 随机选择该类型中的一个细胞作为计算起点
+adata = sc.read("data/adata_annotated.h5ad")
 
-# 步骤 2: 计算 Diffusion Map 和 DPT (伪时间)
-sc.tl.diffmap(adata)
-sc.tl.dpt(adata)  # 计算完成后，结果存储在 adata.obs['dpt_pseudotime']
-# 步骤 3: 构建 PAGA 图 (轨迹拓扑结构)
-sc.tl.paga(adata, groups="cell_type")
+X = adata.X
+io.mmwrite("data/expression_matrix.mtx", X)
 
-# %%
-# 步骤 4: 可视化 (轨迹树 & 伪时间)
-# 使用 PAGA 初始化 draw_graph 布局 (这是产生类似 Monocle "树状图" 的关键)
-sc.pl.paga(adata, plot=False)  # 预计算
-sc.tl.draw_graph(adata, init_pos="paga")
+adata.obs.to_csv("data/cell_metadata.csv", index=True)   # 行名为 cell IDs
+adata.var.to_csv("data/gene_metadata.csv", index=True)   # 行名为 gene names
 
-# 绘图：左图为细胞类型轨迹，右图为伪时间着色
-fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-# 图 1: 轨迹连接图 (Topology)
-sc.pl.draw_graph(
-    adata, 
-    color="cell_type", 
-    legend_loc="on data", 
-    title="Trajectory (PAGA Graph)",
-    ax=axes[0],
-    show=False
-)
-
-# 图 2: 伪时间分布 (Pseudotime)
-sc.pl.draw_graph(
-    adata, 
-    color="dpt_pseudotime", 
-    color_map="viridis", 
-    title="Monocle-style Pseudotime",
-    ax=axes[1],
-    show=False
-)
-
-plt.tight_layout()
-plt.savefig("figures/5_Trajectory_Analysis.png")
-plt.show()
+pd.DataFrame(adata.obsm["X_umap"], index=adata.obs_names).to_csv("data/umap_coords.csv")
